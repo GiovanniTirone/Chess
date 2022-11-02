@@ -1,6 +1,7 @@
+package Sources;
+
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
 import javax.swing.*;
 
 public class ChessBoard extends JFrame implements MouseListener, MouseMotionListener {

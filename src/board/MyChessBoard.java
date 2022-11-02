@@ -1,9 +1,15 @@
+package board;
+
+import Sources.PieceGUI;
+import lombok.Data;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
-
+@Data
 public class MyChessBoard {
 
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
@@ -58,15 +64,30 @@ public class MyChessBoard {
             }
         }
 
+        PieceGUI pieceGUI = new PieceGUI();
+        pieceGUI.addColoredUnicodeCharToContainer( "\u2655",board[0][0],Color.BLACK,Color.DARK_GRAY,false );
+
     }
 
-    public JButton[][] getBoard() {
-        return board;
+    public JLabel pressBox (MouseEvent e) {
+        Component c = boardPanel.findComponentAt(e.getX(), e.getY());
+
+        if (c instanceof JPanel) return;
+
+        Point parentLocation = c.getParent().getLocation();
+        xAdjustment = parentLocation.x - e.getX();
+        yAdjustment = parentLocation.y - e.getY();
+        chessPiece = (JLabel) c;
+        chessPiece.setLocation(e.getX() + xAdjustment, e.getY() + yAdjustment);
+
+        layeredPane.add(chessPiece, JLayeredPane.DRAG_LAYER);
+        layeredPane.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
     }
 
-    public JPanel getBoardPanel() {
-        return boardPanel;
-    }
+
+
+
+
 
     public static void main(String[] args) {
         MyChessBoard cb = new MyChessBoard();
