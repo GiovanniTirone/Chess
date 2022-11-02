@@ -8,6 +8,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 @Data
 public class MyChessBoard {
@@ -67,6 +68,11 @@ public class MyChessBoard {
         PieceGUI pieceGUI = new PieceGUI();
         pieceGUI.addColoredUnicodeCharToContainer( "\u2655",board[0][0],Color.BLACK,Color.DARK_GRAY,false );
 
+    }
+
+
+    public void addBoxListeners ( ) {
+        Arrays.stream(board).forEach(box);
     }
 
     public JLabel pressBox (MouseEvent e) {
