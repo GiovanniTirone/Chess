@@ -17,8 +17,9 @@ public class Game {
 
     public Game getIstance () {return game;}
 
+    public void humanTurn () {
 
-
+    }
 
 
 }

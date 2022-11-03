@@ -1,6 +1,8 @@
 package board;
+
 import Sources.PieceGUI;
 import lombok.Data;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -8,16 +10,16 @@ import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
 @Data
-public class MyChessBoard {
+public class MyChessBoardListener {
 
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
-    private MyBox[][] board;
+    private Box[][] board;
     private JPanel boardPanel;
 
     private static final String COLS = "ABCDEFGH";
 
-    public MyChessBoard() {
-        this.board = new MyBox[8][8];
+    public MyChessBoardListener() {
+        this.board = new Box[8][8];
         this.boardPanel = new JPanel(new GridLayout(0, 9));
         boardPanel.setBorder(new LineBorder(Color.BLACK));
         gui.add(boardPanel);
@@ -26,7 +28,7 @@ public class MyChessBoard {
         Insets buttonMargin = new Insets(0, 0, 0, 0);
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                MyBox b = new MyBox();
+                Box b = new Box(i, j);
                 b.setMargin(buttonMargin);
                 ImageIcon icon = new ImageIcon(new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
                 b.setIcon(icon);
@@ -57,22 +59,21 @@ public class MyChessBoard {
 
         PieceGUI pieceGUI = new PieceGUI();
         pieceGUI.addColoredUnicodeCharToContainer("\u2655", board[0][0], Color.BLACK, Color.DARK_GRAY, false);
-        //board[0][0].addMouseListener(new MyListener(board[0][0]));
+
     }
 
+
     public void addBoxListeners() {
-        Arrays.stream(board).forEach(row -> Arrays.stream(row).forEach(MyBox::activateClickListener));
+        Arrays.stream(board).forEach(row -> Arrays.stream(row).forEach(Box::activateClickListener));
     }
 
     public void removeBoxListeners() {
-        Arrays.stream(board).forEach(row -> Arrays.stream(row).forEach(MyBox::removeClickListener));
+        Arrays.stream(board).forEach(row -> Arrays.stream(row).forEach(Box::removeClickListener));
     }
 
 
-
-
     public static void main(String[] args) {
-        MyChessBoard cb = new MyChessBoard();
+        MyChessBoardListener cb = new MyChessBoardListener();
         JFrame f = new JFrame("ChessChamp");
         f.add(cb.gui);
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

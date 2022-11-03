@@ -1,17 +1,18 @@
 package board;
 import lombok.Data;
 import pieces.Piece;
-import java.awt.*;
-import java.awt.event.MouseEvent;
+import javax.swing.*;
 
 @Data
-public class Box extends Button {
+public class Box extends JButton {
 
     private Piece currentPiece;
 
     private int x; // x coordinate
 
     private int y; // y coordinate
+
+    private BoxListener pressListener;
 
     private boolean pressed;
 
@@ -20,14 +21,15 @@ public class Box extends Button {
         this.y = y;
         this.currentPiece = null;
         this.pressed = false;
+        this.pressListener = new BoxListener(this,false);
     }
 
     public void activateClickListener () {
-        this.addMouseListener(new BoxListener(this,false));
+        this.addMouseListener(pressListener);
     }
 
     public void removeClickListener ( ){
-        this.removeMouseListener();
+        this.removeMouseListener(pressListener);
     }
 
 }
