@@ -1,5 +1,9 @@
 package pieces;
 
-public class Knight {
-    private final String label = "\u2658";
+import java.awt.*;
+
+public class Knight extends  Piece{
+    public Knight (Color color){
+        super(color,PieceName.KNIGHT);
+    }
 }

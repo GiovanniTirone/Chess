@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 
-public    class PieceGUI {
+public  class PieceGUI {
 
         static Font font = new Font(Font.SANS_SERIF, Font.PLAIN, 50);
         static Random rnd = new Random();
@@ -111,6 +111,61 @@ public    class PieceGUI {
             c.add(l);
         }
 
+    public static JLabel getJLabelFromUnicodeChar (
+            String s, Color bgColor, Color outlineColor,boolean blackSquare) {
+
+        int sz = font.getSize();
+        BufferedImage bi = new BufferedImage(
+                sz, sz, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = bi.createGraphics();
+        g.setRenderingHint(
+                RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+        g.setRenderingHint(
+                RenderingHints.KEY_DITHERING,
+                RenderingHints.VALUE_DITHER_ENABLE);
+        g.setRenderingHint(
+                RenderingHints.KEY_ALPHA_INTERPOLATION,
+                RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+
+        FontRenderContext frc = g.getFontRenderContext();
+        GlyphVector gv = font.createGlyphVector(frc, s);
+
+        Shape shape1 = gv.getOutline();
+        Rectangle r = shape1.getBounds();
+        System.out.println("shape rect: " + r);
+        int spaceX = sz - r.width;
+        int spaceY = sz - r.height;
+        AffineTransform trans = AffineTransform.getTranslateInstance(
+                -r.x + (spaceX / 2), -r.y + (spaceY / 2));
+        System.out.println("Box2D " + trans);
+
+        Shape shapeCentered = trans.createTransformedShape(shape1);
+
+        Shape imageShape = new Rectangle2D.Double(0, 0, sz, sz);
+        Area imageShapeArea = new Area(imageShape);
+        Area shapeArea = new Area(shapeCentered);
+        imageShapeArea.subtract(shapeArea);
+        ArrayList<Shape> regions = separateShapeIntoRegions(imageShapeArea);
+        g.setStroke(new BasicStroke(1));
+        for (Shape region : regions) {
+            Rectangle r1 = region.getBounds();
+            if (r1.getX() < 0.001 && r1.getY() < 0.001) {
+            } else {
+                g.setColor(bgColor);
+                g.fill(region);
+            }
+        }
+        g.setColor(outlineColor);
+        g.fill(shapeArea);
+        g.dispose();
+
+        JLabel l = new JLabel(new ImageIcon(bi), JLabel.CENTER);
+        Color bg = (blackSquare ? Color.BLACK : Color.WHITE);
+        l.setBackground(bg);
+        l.setOpaque(true);
+        return l;
+    }
         public static void main(String[] args) {
             Runnable r = new Runnable() {
 
@@ -146,5 +201,7 @@ public    class PieceGUI {
             };
             SwingUtilities.invokeLater(r);
         }
+
+
 }
 

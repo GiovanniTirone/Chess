@@ -1,5 +1,9 @@
 package pieces;
 
-public class Rook {
-    private final String label = "\u2656";
+import java.awt.*;
+
+public class Rook extends Piece{
+    public Rook (Color color){
+        super(color,PieceName.ROOK);
+    }
 }

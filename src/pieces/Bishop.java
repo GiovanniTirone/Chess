@@ -1,5 +1,9 @@
 package pieces;
 
-public class Bishop {
-    private final String label = "\u2657";
+import java.awt.*;
+
+public class Bishop extends Piece{
+    public Bishop (Color color){
+        super(color,PieceName.BISHOP);
+    }
 }

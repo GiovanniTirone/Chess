@@ -1,27 +1,40 @@
 package board;
+import Sources.PieceGUI;
 import lombok.Data;
 import pieces.Piece;
 import javax.swing.*;
+import java.awt.*;
+
 
 @Data
 public class Box extends JButton {
 
     private Piece currentPiece;
-
-    private int x; // x coordinate
-
-    private int y; // y coordinate
-
+    private int row; // row coordinate
+    private int col; // col coordinate
     private BoxListener pressListener;
-
+    private boolean isBlack;
     private boolean pressed;
 
     public Box(int x,int y){
-        this.x = x;
-        this.y = y;
-        this.currentPiece = null;
+        this.row = x;
+        this.col = y;
         this.pressed = false;
-        this.pressListener = new BoxListener(this,false);
+        this.pressListener = new BoxListener(this,null);
+    }
+
+    public void addPiece(Piece piece) {
+        this.currentPiece = piece;
+        currentPiece.setJLabel(
+                PieceGUI.getJLabelFromUnicodeChar(piece.getUnicodeChar(),piece.getColor(), Color.DARK_GRAY, isBlack));
+        this.add(this.currentPiece.getJLabel());
+    }
+
+    public void removePiece(){
+        if(this.currentPiece!=null){
+           // currentPiece.setJLabel(null);
+            this.currentPiece = null;
+        }
     }
 
     public void activateClickListener () {
@@ -32,4 +45,21 @@ public class Box extends JButton {
         this.removeMouseListener(pressListener);
     }
 
+    public void removePieceGUI () {
+        this.remove(this.currentPiece.getJLabel());
+    }
+
+    public void addPieceGUI (){
+       this.add(this.currentPiece.getJLabel());
+    }
+
+
+    @Override
+    public String toString() {
+        return "Box (" + row  + ","  +col +")"  +
+                "\n currentPiece: " + currentPiece +
+                "\n pressListener: " + pressListener +
+                "\n pressed=" + pressed +
+                "\n isBlack=" + isBlack ;
+    }
 }

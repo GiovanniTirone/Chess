@@ -1,17 +1,19 @@
 package board;
-
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+
 public class BoxListener implements MouseListener {
+
+    JFrame jFrame;
 
     private Box box ;
 
-    private boolean justPressedAnotherBox;
-
-    public BoxListener(Box box, boolean justPressedAnotherBox){
+    public BoxListener(Box box, JFrame jFrame){
         this.box = box;
-        this.justPressedAnotherBox = justPressedAnotherBox;
+        this.jFrame = jFrame;
     }
 
     @Override
@@ -21,20 +23,53 @@ public class BoxListener implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
+        System.out.println("You press the box " + box.getRow() + " , " + box.getCol());
         //attenzione: devo essere sicuro che le condizioni justPressedAnotherBox e box.isPressed NON si verifichino contemporaneamente
-        if(!justPressedAnotherBox) {
+        if (MyChessBoard.currentPressedBox == null) {
             if (box.getCurrentPiece() != null) {
-                //togli il pezzo dal box
+                System.out.println("-------------------------------------");
+                System.out.println("Press the first box");
+                // box.removePieceGUI();
                 box.setPressed(true);
+                MyChessBoard.currentPressedBox = box;
+                System.out.println("Current piece box: " + MyChessBoard.currentPressedBox);
+                System.out.println("-------------------------------------");
             }
-        }else{
-            if(box.isPressed()){
+        } else {
+            if (box.isPressed()) {
+                System.out.println("-------------------------------------");
+                System.out.println("Press again the same box");
                 box.setPressed(false);
-            }else{
-                //fai l'azione in base alla mossa precedente
+                MyChessBoard.currentPressedBox = null;
+                System.out.println("-------------------------------------");
+            } else {
+                if (box.getCurrentPiece() != null) {
+                    if (box.getCurrentPiece().getColor() == MyChessBoard.currentPressedBox.getCurrentPiece().getColor()) {
+                        return;
+                    }else{
+                        box.getCurrentPiece().setLive(false);
+                        box.removePieceGUI();
+                        box.removePiece();
+                    }
+                }
+                        //implementare la logica di gioco
+                        System.out.println("-------------------------------------");
+                        System.out.println("Press a box after another");
+                        System.out.println("currentPressedBox: " + MyChessBoard.currentPressedBox);
+                        System.out.println("New box: " + box);
+                        MyChessBoard.currentPressedBox.setPressed(false);
+                        MyChessBoard.currentPressedBox.removePieceGUI();
+                        box.addPiece(MyChessBoard.currentPressedBox.getCurrentPiece());
+                        System.out.println("Fill the new box: " + box);
+                        MyChessBoard.currentPressedBox.removePiece();
+                        MyChessBoard.currentPressedBox = null;
+                        jFrame.setVisible(true);
+                        System.out.println("-------------------------------------");
             }
         }
     }
+
+
 
     @Override
     public void mouseReleased(MouseEvent e) {

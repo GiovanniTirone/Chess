@@ -1,5 +1,9 @@
 package pieces;
 
-public class Queen {
-    private final String label = "\u2655";
+import java.awt.*;
+
+public class Queen extends Piece {
+    public Queen (Color color){
+        super(color,PieceName.QUEEN);
+    }
 }

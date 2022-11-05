@@ -1,7 +1,10 @@
 package pieces;
 
-public class Pawn {
-    private final PieceName name = PieceName.PAWN;
-    private final String label =  "\u2659";
+import java.awt.*;
+
+public class Pawn extends Piece{
+    public Pawn (Color color){
+        super(color,PieceName.PAWN);
+    }
 
 }
