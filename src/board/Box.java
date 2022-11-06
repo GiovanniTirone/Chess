@@ -53,6 +53,9 @@ public class Box extends JButton {
        this.add(this.currentPiece.getJLabel());
     }
 
+    public boolean isBorderBox () {
+        return (row==0 || row==7 || col==0 || col==7) ? true : false;
+    }
 
     @Override
     public String toString() {

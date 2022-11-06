@@ -1,7 +1,5 @@
 package moves;
 import pieces.PieceName;
-
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,19 +34,6 @@ public class PossibleMoves {
         }
         */
 
-        /*
-        piecesMovesMap.put(PieceName.KING,new BoxMoves[8][8]);
-        for(int i=0; i<8; i++){
-            for(int j=0; i<8; i++) {
-                if(i+1<8){
-                    piecesMovesMap.get(PieceName.KING)[i][j].add(new Move(i+1,j));
-                    if(j-1>=0) piecesMovesMap.get(PieceName.KING)[i][j].add(new Move(i+1,-1));
-                    if(j+1<8) piecesMovesMap.get(PieceName.KING)[i][j].add(new Move(i+1,j+1));
-                }
-                if()
-            }
-        }
-        */
 
         for(int i=0; i<8; i++) {
             for (int j = 0; j < 8; j++) {
