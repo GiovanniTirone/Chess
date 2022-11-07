@@ -20,7 +20,7 @@ public class PossibleMoves {
 
         for(int i=0; i<8; i++){
             for(int j=0; j<8; j++){
-                if(i-1>=0) piecesMovesMap.get(PieceName.PAWN)[i][j].add(new Move(i-1,j));
+                if(i-1>=0) piecesMovesMap.get(PieceName.PAWN)[i][j].add(new EndingMove(i-1,j));
             }
         }
         /*
@@ -39,12 +39,12 @@ public class PossibleMoves {
             for (int j = 0; j < 8; j++) {
                 for(int k=-1; k<2; k+=2){
                     if(mod9(i+k)!=8) {
-                        piecesMovesMap.get(PieceName.KING)[i][j].add(new Move(i+k,j));
-                        if(mod9(j-k)!=8) piecesMovesMap.get(PieceName.KING)[i][j].add(new Move(i+k,j-k));
-                        if(mod9(j+k)!=8) piecesMovesMap.get(PieceName.KING)[i][j].add(new Move(i+k,j+k));
+                        piecesMovesMap.get(PieceName.KING)[i][j].add(new EndingMove(i+k,j));
+                        if(mod9(j-k)!=8) piecesMovesMap.get(PieceName.KING)[i][j].add(new EndingMove(i+k,j-k));
+                        if(mod9(j+k)!=8) piecesMovesMap.get(PieceName.KING)[i][j].add(new EndingMove(i+k,j+k));
                     }
                     if(mod9(j+k)!=8){
-                        piecesMovesMap.get(PieceName.KING)[i][j].add(new Move(i,j+k));
+                        piecesMovesMap.get(PieceName.KING)[i][j].add(new EndingMove(i,j+k));
                     }
                 }
             }
@@ -70,7 +70,7 @@ public class PossibleMoves {
         piecesMovesMap.put(pieceName,new BoxMoves[8][8]);
         for(int i=0; i<8; i++) {
             for (int j = 0; j < 8; j++) {
-                piecesMovesMap.get(pieceName)[i][j]=new BoxMoves();
+               // piecesMovesMap.get(pieceName)[i][j]=new BoxMoves();
             }
         }
     }

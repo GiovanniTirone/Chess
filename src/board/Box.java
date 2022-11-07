@@ -20,7 +20,7 @@ public class Box extends JButton {
         this.row = x;
         this.col = y;
         this.pressed = false;
-        this.pressListener = new BoxListener(this,null);
+        this.pressListener = new BoxListener(this,null,null);
     }
 
     public void addPiece(Piece piece) {
@@ -61,7 +61,7 @@ public class Box extends JButton {
     public String toString() {
         return "Box (" + row  + ","  +col +")"  +
                 "\n currentPiece: " + currentPiece +
-                "\n pressListener: " + pressListener +
+                //"\n pressListener: " + pressListener +
                 "\n pressed=" + pressed +
                 "\n isBlack=" + isBlack ;
     }

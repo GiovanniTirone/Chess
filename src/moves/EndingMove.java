@@ -1,20 +1,18 @@
 package moves;
 import lombok.Data;
 
-import java.util.ArrayList;
-
 @Data
-public class Move  {
+public class EndingMove {
     private int row;
     private int col;
 
-    public Move(int row,int col){
+    public EndingMove(int row, int col){
         this.row = row;
         this.col = col;
     }
 
-    public boolean equals (Move move){
-        return checkRowCol(move.getRow(), move.getCol());
+    public boolean equals (EndingMove endingMove){
+        return checkRowCol(endingMove.getRow(), endingMove.getCol());
     }
 
     public boolean checkRowCol (int row, int col){

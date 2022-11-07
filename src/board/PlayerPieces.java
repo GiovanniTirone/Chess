@@ -1,7 +1,6 @@
 package board;
 import lombok.Data;
-import pieces.Piece;
-import pieces.PieceName;
+import pieces.*;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -20,18 +19,35 @@ public class PlayerPieces extends HashMap <PieceName,ArrayList<Piece>> {
                 case PAWN:
                     this.put(pieceName, new ArrayList<>());
                     for (int i = 0; i < 8; i++) {
-                        this.get(pieceName).add(new Piece(color, pieceName));
+                        this.get(pieceName).add(new Pawn(color));
                     }
                     break;
-                case KING: case QUEEN:
+                case KING:
                     this.put(pieceName, new ArrayList<>());
-                    this.get(pieceName).add(new Piece(color,pieceName));
+                    this.get(pieceName).add(new King(color));
                     break;
-                default:
+                case QUEEN:
+                    this.put(pieceName, new ArrayList<>());
+                    this.get(pieceName).add(new Queen(color));
+                    break;
+                case BISHOP:
                     this.put(pieceName, new ArrayList<>());
                     for(int i=0; i<2; i++) {
-                        this.get(pieceName).add(new Piece(color,pieceName));
+                        this.get(pieceName).add(new Bishop(color));
                     }
+                    break;
+                case ROOK:
+                    this.put(pieceName, new ArrayList<>());
+                    for(int i=0; i<2; i++) {
+                        this.get(pieceName).add(new Rook(color));
+                    }
+                    break;
+                case KNIGHT:
+                    this.put(pieceName, new ArrayList<>());
+                    for(int i=0; i<2; i++) {
+                        this.get(pieceName).add(new Knight(color));
+                    }
+                    break;
             }
         }
 

@@ -1,9 +1,9 @@
 package pieces;
 
 import board.Box;
+import board.MyChessBoard;
+import board.PlayerPieces;
 import moves.BoxMoves;
-import moves.Move;
-import utility.Util;
 
 import java.awt.*;
 
@@ -14,19 +14,40 @@ public class King extends Piece{
         super(color,PieceName.KING);
     }
 
-    public BoxMoves getPossibleMoves (Box currentBox) {
-        BoxMoves boxMoves = new BoxMoves();
+    public BoxMoves getPossibleMoves (Box currentBox,Box[][]board) {
+        BoxMoves boxMoves = new BoxMoves(currentBox);
         int i = currentBox.getRow();
         int j = currentBox.getCol();
         for (int k = -1; k < 2; k += 2) {
             if (numberIsInBoard(i + k)) {
-                boxMoves.addMove(i + k, j);
-                if (numberIsInBoard(j - k)) boxMoves.addMove(i + k, j - k);
-                if (numberIsInBoard(j + k)) boxMoves.addMove(i + k, j + k);
+                boxMoves.addMove(i + k, j,board);
+                if (numberIsInBoard(j - k)) boxMoves.addMove(i + k, j - k,board);
+                if (numberIsInBoard(j + k)) boxMoves.addMove(i + k, j + k,board);
             }
-            if (numberIsInBoard(j + k)) boxMoves.addMove(i, j + k);
+            if (numberIsInBoard(j + k)) boxMoves.addMove(i, j + k,board);
         }
         return boxMoves;
+    }
+
+    public static void main(String[] args) throws Exception {
+        MyChessBoard cb = new MyChessBoard();
+        PlayerPieces blackPieces = new PlayerPieces(Color.BLACK);
+        PlayerPieces whitePieces = new PlayerPieces(Color.WHITE);
+        //cb.addPiecesInStarterPosition(whitePieces,blackPieces);
+        cb.addPieceToBoard(4,4,whitePieces.getPiece(PieceName.KING,0));
+        cb.addPieceToBoard(3,3,whitePieces.getPiece(PieceName.PAWN,0));
+        BoxMoves boxMoves = whitePieces.getPiece(PieceName.KING,0).getPossibleMoves(cb.getBoard()[4][4],cb.getBoard());
+        System.out.println("Moves of the box" + "(" +4 +"," +4+"):" +
+                "\n" + whitePieces.getPiece(PieceName.KING,0)
+                .printPossibleMoves(boxMoves));
+        /*for(int i=0; i<8; i++){
+            for(int j=0; j<8; j++){
+                BoxMoves boxMoves = whitePieces.getPiece(PieceName.KING,0).getPossibleMoves(cb.getBoard()[i][j],cb.getBoard());
+                System.out.println("Moves of the box" + "(" +i +"," +j+"):" +
+                        "\n" + whitePieces.getPiece(PieceName.KING,0)
+                        .printPossibleMoves(boxMoves));
+            }
+        }*/
     }
 
 

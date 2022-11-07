@@ -1,5 +1,6 @@
 package board;
 import lombok.Data;
+import moves.BoxMoves;
 import pieces.Piece;
 import pieces.PieceName;
 import javax.swing.*;
@@ -13,6 +14,7 @@ import java.util.Arrays;
 public class MyChessBoard {
 
     public static Box currentPressedBox = null;
+    public static BoxMoves currentPossibleMoves = null;
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
     private  Box[][] board;
     private JPanel boardPanel;
@@ -41,7 +43,7 @@ public class MyChessBoard {
                     b.setBackground(Color.BLACK);
                     b.setBlack(true);
                 }
-                board[j][i] = b;
+                board[i][j] = b;
             }
         }
 
@@ -126,10 +128,12 @@ public class MyChessBoard {
 
         cb.addPiecesInStarterPosition(whitePieces,blackPieces);
 
+
+        //IMPORTANTE: settare jFrame e board nei box listeners
         Arrays.stream(cb.board).forEach(row -> Arrays.stream(row).forEach(box -> box.getPressListener().jFrame=f));
+        Arrays.stream(cb.board).forEach(row -> Arrays.stream(row).forEach(box -> box.getPressListener().setBoard(cb.board)));
 
         cb.addBoxListeners();
-
 
         f.setVisible(true);
 
