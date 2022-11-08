@@ -1,5 +1,6 @@
 package player;
 import board.boxes.FakeBox;
+import board.boxes.IBox;
 import board.boxes.RealBox;
 import moves.Move;
 import java.awt.Color;
@@ -11,35 +12,43 @@ public class AiPlayer extends Player {
     public AiPlayer (boolean human, Color color) {
         super(human, color);
     }
-    /*
-    public void makeMove (RealBox[][] board) {
-        Node startingNode = new Node(createFakeBoardFromBoard(board));
+
+    public boolean makeMove (RealBox[][] board) {
+        List<Move> possibleMoves = getPossibleMoves(board);
+        FakeBox[][] fakeBoard = createFakeBoardFromBoard(board);
         int bestValue = Integer.MIN_VALUE;
-        FakeMove bestFakeMove = null;
-        for(Node child : startingNode.getChildren()){
-            int tempValue = miniMax(child,0,true);
+        Move bestMove = null;
+        for(Move move : possibleMoves){
+            move.makeMove(fakeBoard);
+            int tempValue = miniMax(fakeBoard,0,true);
+            move.undo(fakeBoard);
             if(tempValue>bestValue) {
                 bestValue = tempValue;
-                bestFakeMove =
+                bestMove = move;
             }
         }
+        return bestMove.makeMove(board);
     }
 
 
 
 
     private int miniMax (FakeBox[][] board, int depth, boolean maximizingPlayer) {
-        if(depth == 0 || node.getChildren().size()==0) return evaluateBoard(board);
+        if(depth == 3 ) return evaluateBoard(board); //aggiungere condizione di VITTORIA
         if(maximizingPlayer){
             int value = Integer.MIN_VALUE;
-            for(Move move : node.getChildren()){
-                value = Math.max(value,miniMax(child,depth-1,false));
+            for(Move move : getPossibleMoves(board)){
+                move.makeMove(board);
+                value = Math.max(value,miniMax(board,depth+1,false));
+                move.undo(board);
             }
             return value;
         }else{
             int value = Integer.MAX_VALUE;
-            for(NodeChild child : node.getChildren()){
-                value = Math.min(value,miniMax(child,depth-1,true));
+            for(Move move : getPossibleMoves(board)){
+                move.makeMove(board);
+                value = Math.min(value,miniMax(board,depth+1,true));
+                move.undo(board);
             }
             return value;
         }
@@ -70,19 +79,20 @@ public class AiPlayer extends Player {
         return result;
     }
 
-    private List<Move> getPossibleMoves (FakeBox[][] board){
-        List<Move> possibleFakeMoves = new ArrayList<>();
+    private List<Move> getPossibleMoves (IBox[][] board){
+        List<Move> possibleMoves = new ArrayList<>();
         for(int i=0; i<8; i++) {
             for (int j = 0; j < 8; j++) {
                 if(board[i][j].getCurrentPiece()!=null) {
                     board[i][j].getCurrentPiece()
                                 .getPossibleMoves( board[i][j], board)
                                 .stream()
-                                .forEach(move-> possibleFakeMoves.add(move));
+                                .forEach(move-> possibleMoves.add(move));
                 }
             }
         }
+        return possibleMoves;
     }
-    */
+
 
 }

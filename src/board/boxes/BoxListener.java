@@ -55,14 +55,14 @@ public class BoxListener implements MouseListener {
                     /* if (box.getCurrentPiece().getColor() == MyChessBoard.currentPressedBox.getCurrentPiece().getColor()) {
                         return;
                     }else{*/
-                    if(MyChessBoard.currentPossibleMoves.containsMove(realBox.getRow(), realBox.getCol())) {
+                    if(MyChessBoard.currentPossibleMoves.containsEndingMove(realBox.getRow(), realBox.getCol())) {
                         realBox.getCurrentPiece().setLive(false);
                         realBox.removePieceGUI();
                         realBox.removePiece();
                     }
                     }
                 }
-            if(MyChessBoard.currentPossibleMoves.containsMove(realBox.getRow(), realBox.getCol())){
+            if(MyChessBoard.currentPossibleMoves.containsEndingMove(realBox.getRow(), realBox.getCol())){
                 //implementare la logica di gioco
                 System.out.println("-------------------------------------");
                 System.out.println("Press a box after another");

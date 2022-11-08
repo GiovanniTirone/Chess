@@ -1,6 +1,5 @@
 package moves;
 import board.boxes.IBox;
-import board.boxes.RealBox;
 import lombok.Data;
 import board.boxes.FakeBox;
 import java.util.ArrayList;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 public class BoxMoves extends ArrayList<Move> {
 
     private IBox box;
-
 
     public BoxMoves (IBox box) {
         super();
@@ -31,7 +29,7 @@ public class BoxMoves extends ArrayList<Move> {
         }
     }
 
-    public boolean containsMove (int i, int j){
+    public boolean containsEndingMove(int i, int j){
         return this.stream().anyMatch(move -> move.getEnd().getRow()==i && move.getEnd().getCol()==j);
     }
 
