@@ -1,8 +1,8 @@
 package pieces;
-import board.Box;
+import board.RealBox;
 import lombok.Data;
 import moves.BoxMoves;
-import moves.EndingMove;
+import moves.Move;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,7 +40,7 @@ public abstract class Piece {
     }*/
 
 
-    public abstract BoxMoves getPossibleMoves (Box currentBox,Box [][] board);
+    public abstract BoxMoves getPossibleMoves (RealBox currentRealBox, RealBox[][] board);
 
     public int getStrength () {
         return this.pieceName.getStrenght();
@@ -48,8 +48,8 @@ public abstract class Piece {
 
     public String printPossibleMoves (BoxMoves boxMoves) {
         String str = "";
-        for(EndingMove endingMove : boxMoves){
-            str+="[" + endingMove.getRow() +","+ endingMove.getCol() +"]";
+        for(Move move : boxMoves){
+            str+="[" + move.getEnd().getRow() +","+ move.getEnd().getCol() +"]";
         }
         return str;
     }

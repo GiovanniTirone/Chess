@@ -1,6 +1,6 @@
 package pieces;
 
-import board.Box;
+import board.RealBox;
 import board.MyChessBoard;
 import board.PlayerPieces;
 import moves.BoxMoves;
@@ -14,10 +14,10 @@ public class King extends Piece{
         super(color,PieceName.KING);
     }
 
-    public BoxMoves getPossibleMoves (Box currentBox,Box[][]board) {
-        BoxMoves boxMoves = new BoxMoves(currentBox);
-        int i = currentBox.getRow();
-        int j = currentBox.getCol();
+    public BoxMoves getPossibleMoves (RealBox currentRealBox, RealBox[][]board) {
+        BoxMoves boxMoves = new BoxMoves(currentRealBox);
+        int i = currentRealBox.getRow();
+        int j = currentRealBox.getCol();
         for (int k = -1; k < 2; k += 2) {
             if (numberIsInBoard(i + k)) {
                 boxMoves.addMove(i + k, j,board);

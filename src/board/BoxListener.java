@@ -1,9 +1,7 @@
 package board;
 import lombok.Data;
-import moves.BoxMoves;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -12,13 +10,13 @@ public class BoxListener implements MouseListener {
 
     JFrame jFrame;
 
-    private Box box;
+    private RealBox realBox;
 
-    private Box [][] board;
+    private RealBox[][] board;
 
 
-    public BoxListener(Box box, JFrame jFrame,Box[][]board){
-        this.box = box;
+    public BoxListener(RealBox realBox, JFrame jFrame, RealBox[][]board){
+        this.realBox = realBox;
         this.jFrame = jFrame;
         this.board = board;
     }
@@ -30,51 +28,51 @@ public class BoxListener implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        System.out.println("You press the box " + box.getRow() + " , " + box.getCol());
+        System.out.println("You press the box " + realBox.getRow() + " , " + realBox.getCol());
         //attenzione: devo essere sicuro che le condizioni justPressedAnotherBox e box.isPressed NON si verifichino contemporaneamente
-        if (MyChessBoard.currentPressedBox == null) {
-            if (box.getCurrentPiece() != null) {
+        if (MyChessBoard.currentPressedRealBox == null) {
+            if (realBox.getCurrentPiece() != null) {
                 System.out.println("-------------------------------------");
                 System.out.println("Press the first box");
                 // box.removePieceGUI();
-                box.setPressed(true);
-                MyChessBoard.currentPressedBox = box;
-                MyChessBoard.currentPossibleMoves = box.getCurrentPiece().getPossibleMoves(box,board);
-                System.out.println("Current piece box: " + MyChessBoard.currentPressedBox);
+                realBox.setPressed(true);
+                MyChessBoard.currentPressedRealBox = realBox;
+                MyChessBoard.currentPossibleMoves = realBox.getCurrentPiece().getPossibleMoves(realBox,board);
+                System.out.println("Current piece box: " + MyChessBoard.currentPressedRealBox);
                 System.out.println("Box moves: " + MyChessBoard.currentPossibleMoves);
                 System.out.println("-------------------------------------");
             }
         } else {
-            if (box.isPressed()) {
+            if (realBox.isPressed()) {
                 System.out.println("-------------------------------------");
                 System.out.println("Press again the same box");
-                box.setPressed(false);
-                MyChessBoard.currentPressedBox = null;
+                realBox.setPressed(false);
+                MyChessBoard.currentPressedRealBox = null;
                 System.out.println("-------------------------------------");
             } else {
-                if (box.getCurrentPiece() != null) {
+                if (realBox.getCurrentPiece() != null) {
                     /* if (box.getCurrentPiece().getColor() == MyChessBoard.currentPressedBox.getCurrentPiece().getColor()) {
                         return;
                     }else{*/
-                    if(MyChessBoard.currentPossibleMoves.containsMove(box.getRow(),box.getCol())) {
-                        box.getCurrentPiece().setLive(false);
-                        box.removePieceGUI();
-                        box.removePiece();
+                    if(MyChessBoard.currentPossibleMoves.containsMove(realBox.getRow(), realBox.getCol())) {
+                        realBox.getCurrentPiece().setLive(false);
+                        realBox.removePieceGUI();
+                        realBox.removePiece();
                     }
                     }
                 }
-            if(MyChessBoard.currentPossibleMoves.containsMove(box.getRow(),box.getCol())){
+            if(MyChessBoard.currentPossibleMoves.containsMove(realBox.getRow(), realBox.getCol())){
                 //implementare la logica di gioco
                 System.out.println("-------------------------------------");
                 System.out.println("Press a box after another");
-                System.out.println("currentPressedBox: " + MyChessBoard.currentPressedBox);
-                System.out.println("New box: " + box);
-                MyChessBoard.currentPressedBox.setPressed(false);
-                MyChessBoard.currentPressedBox.removePieceGUI();
-                box.addPiece(MyChessBoard.currentPressedBox.getCurrentPiece());
-                System.out.println("Fill the new box: " + box);
-                MyChessBoard.currentPressedBox.removePiece();
-                MyChessBoard.currentPressedBox = null;
+                System.out.println("currentPressedBox: " + MyChessBoard.currentPressedRealBox);
+                System.out.println("New box: " + realBox);
+                MyChessBoard.currentPressedRealBox.setPressed(false);
+                MyChessBoard.currentPressedRealBox.removePieceGUI();
+                realBox.addPiece(MyChessBoard.currentPressedRealBox.getCurrentPiece());
+                System.out.println("Fill the new box: " + realBox);
+                MyChessBoard.currentPressedRealBox.removePiece();
+                MyChessBoard.currentPressedRealBox = null;
                 jFrame.setVisible(true);
                 System.out.println("-------------------------------------");
             }

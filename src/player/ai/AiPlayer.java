@@ -1,6 +1,7 @@
-package player;
+package player.ai;
 
-import board.Box;
+import board.RealBox;
+import player.Player;
 
 
 import java.awt.*;
@@ -8,13 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class AiPlayer extends Player{
+public class AiPlayer extends Player {
 
     public AiPlayer (boolean human, Color color) {
         super(human, color);
     }
-
-    public void makeMove (Box [][] board) {
+    /*
+    public void makeMove (RealBox[][] board) {
         Node startingNode = new Node(createFakeBoardFromBoard(board));
         int bestValue = Integer.MIN_VALUE;
         FakeMove bestFakeMove = null;
@@ -47,11 +48,11 @@ public class AiPlayer extends Player{
         }
     }
 
-    private FakeBox createFakeBoxFromBox (Box box) {
-        return new FakeBox(box.getRow(), box.getCol());
+    private FakeBox createFakeBoxFromBox (RealBox realBox) {
+        return new FakeBox(realBox.getRow(), realBox.getCol());
     }
 
-    private FakeBox[][] createFakeBoardFromBoard (Box[][] board){
+    private FakeBox[][] createFakeBoardFromBoard (RealBox[][] board){
         FakeBox [][] fakeBoxes = new FakeBox[8][8];
         for(int i=0; i<8; i++){
             for(int j=0; j<8; j++){
@@ -61,7 +62,7 @@ public class AiPlayer extends Player{
         return fakeBoxes;
     }
 
-    private Stream<FakeMove> createPossibleMoves (FakeBox[][] board){
+    private Stream<FakeMove> createPossibleMoves (Box[][] board){
         List<FakeMove> possibleFakeMoves = new ArrayList<>();
         for(int i=0; i<8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -74,6 +75,6 @@ public class AiPlayer extends Player{
             }
         }
     }
-
+    */
 
 }

@@ -13,16 +13,16 @@ import java.util.Arrays;
 @Data
 public class MyChessBoard {
 
-    public static Box currentPressedBox = null;
+    public static RealBox currentPressedRealBox = null;
     public static BoxMoves currentPossibleMoves = null;
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
-    private  Box[][] board;
+    private  RealBox[][] board;
     private JPanel boardPanel;
 
     private static final String COLS = "ABCDEFGH";
 
     public MyChessBoard()  {
-        this.board = new Box[8][8];
+        this.board = new RealBox[8][8];
         this.boardPanel = new JPanel(new GridLayout(0, 9));
         boardPanel.setBorder(new LineBorder(Color.BLACK));
         gui.add(boardPanel);
@@ -31,7 +31,7 @@ public class MyChessBoard {
         Insets buttonMargin = new Insets(0, 0, 0, 0);
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                Box b = new Box(i, j);
+                RealBox b = new RealBox(i, j);
                 b.setMargin(buttonMargin);
                 ImageIcon icon = new ImageIcon(new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
                 b.setIcon(icon);
@@ -70,11 +70,11 @@ public class MyChessBoard {
 
 
     public void addBoxListeners() {
-        Arrays.stream(board).forEach(row -> Arrays.stream(row).forEach(Box::activateClickListener));
+        Arrays.stream(board).forEach(row -> Arrays.stream(row).forEach(RealBox::activateClickListener));
     }
 
     public void removeBoxListeners() {
-        Arrays.stream(board).forEach(row -> Arrays.stream(row).forEach(Box::removeClickListener));
+        Arrays.stream(board).forEach(row -> Arrays.stream(row).forEach(RealBox::removeClickListener));
     }
 
     public void addPieceToBoard (int i, int j,Piece piece){

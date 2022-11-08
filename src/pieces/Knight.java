@@ -1,6 +1,6 @@
 package pieces;
 
-import board.Box;
+import board.RealBox;
 import board.MyChessBoard;
 import board.PlayerPieces;
 import moves.BoxMoves;
@@ -12,10 +12,10 @@ public class Knight extends  Piece{
         super(color,PieceName.KNIGHT);
     }
 
-    public BoxMoves getPossibleMoves (Box currentBox,Box[][]board) {
-        BoxMoves boxMoves = new BoxMoves(currentBox);
-        int i = currentBox.getRow();
-        int j = currentBox.getCol();
+    public BoxMoves getPossibleMoves (RealBox currentRealBox, RealBox[][]board) {
+        BoxMoves boxMoves = new BoxMoves(currentRealBox);
+        int i = currentRealBox.getRow();
+        int j = currentRealBox.getCol();
         for (int k = -1; k < 2; k += 2) {
             for (int n = -2; n < 3; n += 4) {
                 addKnightMove(i, j, k, n, boxMoves, board);
@@ -25,7 +25,7 @@ public class Knight extends  Piece{
         return boxMoves;
     }
 
-    private void addKnightMove (int i, int j,int n,int k, BoxMoves boxMoves,Box[][]board) {
+    private void addKnightMove (int i, int j, int n, int k, BoxMoves boxMoves, RealBox[][]board) {
         if (numberIsInBoardKnight(i + k) && numberIsInBoardKnight(j + n))
             boxMoves.addMove(i + k, j + n, board);
     }

@@ -1,9 +1,10 @@
-package player;
+package player.ai;
+import board.Box;
 import lombok.Data;
 import pieces.Piece;
 
 @Data
-public class FakeBox {
+public class FakeBox implements Box {
 
     private Piece currentPiece;
     private int row; // row coordinate
