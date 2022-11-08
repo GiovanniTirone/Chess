@@ -1,4 +1,5 @@
 package pieces;
+import board.boxes.IBox;
 import board.boxes.RealBox;
 import board.MyChessBoard;
 import board.PlayerPieces;
@@ -13,10 +14,10 @@ public class Pawn extends Piece{
     }
 
 
-    public BoxMoves getPossibleMoves (RealBox currentRealBox, RealBox[][] board){
-        BoxMoves boxMoves = new BoxMoves(currentRealBox);
-        int i = currentRealBox.getRow();
-        int j = currentRealBox.getCol();
+    public BoxMoves getPossibleMoves (IBox currentBox, IBox[][] board){
+        BoxMoves boxMoves = new BoxMoves(currentBox);
+        int i = currentBox.getRow();
+        int j = currentBox.getCol();
         if(this.getColor() == Color.BLACK){
             if(i!=7) boxMoves.addMove(i+1,j,board);
         }else{
@@ -25,11 +26,11 @@ public class Pawn extends Piece{
         return boxMoves;
     }
 
-    public BoxMoves getKillingMoves (RealBox currentRealBox, RealBox[][] board) {
-        BoxMoves boxMoves = new BoxMoves(currentRealBox);
+    public BoxMoves getKillingMoves (IBox currentBox, IBox[][] board) {
+        BoxMoves boxMoves = new BoxMoves(currentBox);
         int k = this.getColor() == Color.BLACK ? 1 : -1 ;
-        int i = currentRealBox.getRow();
-        int j = currentRealBox.getCol();
+        int i = currentBox.getRow();
+        int j = currentBox.getCol();
         if(numberIsInBoard(i+k)){
             if(numberIsInBoard(j+1)) boxMoves.addMove(i+k,j+1,board);
             if(numberIsInBoard(j-1)) boxMoves.addMove(i+k,j-1,board);

@@ -1,6 +1,5 @@
 package pieces;
-
-import board.boxes.RealBox;
+import board.boxes.IBox;
 import board.MyChessBoard;
 import board.PlayerPieces;
 import moves.BoxMoves;
@@ -14,7 +13,7 @@ public class Rook extends Piece{
         super(color,PieceName.ROOK);
     }
 
-    public BoxMoves getPossibleMoves (RealBox currentRealBox, RealBox[][] board) {
+    public BoxMoves getPossibleMoves (IBox currentRealBox, IBox[][] board) {
         BoxMoves boxMoves = new BoxMoves(currentRealBox);
         int i = currentRealBox.getRow();
         int j = currentRealBox.getCol();

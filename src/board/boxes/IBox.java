@@ -3,7 +3,7 @@ package board.boxes;
 
 import pieces.Piece;
 
-public interface Box {
+public interface IBox {
         int getRow ();
         int getCol ();
         Piece getCurrentPiece();

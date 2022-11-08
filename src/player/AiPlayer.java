@@ -11,7 +11,7 @@ public class AiPlayer extends Player {
     public AiPlayer (boolean human, Color color) {
         super(human, color);
     }
-
+    /*
     public void makeMove (RealBox[][] board) {
         Node startingNode = new Node(createFakeBoardFromBoard(board));
         int bestValue = Integer.MIN_VALUE;
@@ -28,7 +28,7 @@ public class AiPlayer extends Player {
 
 
 
-    private int miniMax (FakeBox [][] board, int depth, boolean maximizingPlayer) {
+    private int miniMax (FakeBox[][] board, int depth, boolean maximizingPlayer) {
         if(depth == 0 || node.getChildren().size()==0) return evaluateBoard(board);
         if(maximizingPlayer){
             int value = Integer.MIN_VALUE;
@@ -50,7 +50,7 @@ public class AiPlayer extends Player {
     }
 
     private FakeBox[][] createFakeBoardFromBoard (RealBox[][] board){
-        FakeBox [][] fakeBoxes = new FakeBox[8][8];
+        FakeBox[][] fakeBoxes = new FakeBox[8][8];
         for(int i=0; i<8; i++){
             for(int j=0; j<8; j++){
                 fakeBoxes[i][j] =  createFakeBoxFromBox(board[i][j]);
@@ -83,6 +83,6 @@ public class AiPlayer extends Player {
             }
         }
     }
-
+    */
 
 }

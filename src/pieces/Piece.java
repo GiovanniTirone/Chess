@@ -1,10 +1,9 @@
 package pieces;
-import board.boxes.RealBox;
+import board.boxes.IBox;
 import lombok.Data;
 import moves.BoxMoves;
 import moves.Move;
-
-import javax.swing.*;
+import javax.swing.JLabel;
 import java.awt.*;
 
 
@@ -40,7 +39,7 @@ public abstract class Piece {
     }*/
 
 
-    public abstract BoxMoves getPossibleMoves (Box currentBox, Box[][] board);
+    public abstract BoxMoves getPossibleMoves (IBox currentBox, IBox[][] board);
 
     public int getStrength () {
         return this.pieceName.getStrenght();

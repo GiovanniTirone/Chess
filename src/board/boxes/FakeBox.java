@@ -1,17 +1,16 @@
 package board.boxes;
-import board.boxes.Box;
 import lombok.Data;
 import pieces.Piece;
 
 @Data
-public class FakeBox implements Box {
+public class FakeBox implements IBox {
 
     private Piece currentPiece;
     private int row; // row coordinate
     private int col; // col coordinate
 
 
-    public FakeBox(int x,int y){
+    public FakeBox(int x, int y){
         this.row = x;
         this.col = y;
     }

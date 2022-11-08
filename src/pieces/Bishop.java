@@ -1,4 +1,5 @@
 package pieces;
+import board.boxes.IBox;
 import board.boxes.RealBox;
 import board.MyChessBoard;
 import board.PlayerPieces;
@@ -12,10 +13,10 @@ public class Bishop extends Piece{
         super(color,PieceName.BISHOP);
     }
 
-    public BoxMoves getPossibleMoves (RealBox currentRealBox, RealBox[][] board) {
-        BoxMoves boxMoves = new BoxMoves(currentRealBox);
-        int i = currentRealBox.getRow();
-        int j = currentRealBox.getCol();
+    public BoxMoves getPossibleMoves (IBox currentBox, IBox[][] board) {
+        BoxMoves boxMoves = new BoxMoves(currentBox);
+        int i = currentBox.getRow();
+        int j = currentBox.getCol();
         for (int k = -1; k < 2; k += 2) {
             int n = 1;
             while (numberIsInBoard(i + n * k) && numberIsInBoard(j - n * k)) {

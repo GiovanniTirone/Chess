@@ -1,24 +1,22 @@
 package moves;
-import board.boxes.Box;
+import board.boxes.IBox;
 import board.boxes.RealBox;
 import lombok.Data;
 import board.boxes.FakeBox;
-
 import java.util.ArrayList;
-
 
 @Data
 public class BoxMoves extends ArrayList<Move> {
 
-    private Box box;
+    private IBox box;
 
 
-    public BoxMoves (RealBox box) {
+    public BoxMoves (IBox box) {
         super();
         this.box = box;
     }
 
-    public void addMove(int row, int col, RealBox[][] board){
+    public void addMove(int row, int col, IBox[][] board){
         if(box.getCurrentPiece()!=null&&board[row][col].getCurrentPiece()!=null)
         if(box.getCurrentPiece().getColor() == board[row][col].getCurrentPiece().getColor())return;
         this.add(new Move(new FakeBox(box.getRow(),box.getCol()) ,new FakeBox(row,col)));

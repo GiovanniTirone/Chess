@@ -1,7 +1,5 @@
 package board.boxes;
 import Sources.PieceGUI;
-import board.boxes.Box;
-import board.boxes.BoxListener;
 import lombok.Data;
 import pieces.Piece;
 import javax.swing.*;
@@ -9,7 +7,7 @@ import java.awt.*;
 
 
 @Data
-public class RealBox extends JButton implements Box {
+public class RealBox extends JButton implements IBox {
 
     private Piece currentPiece;
     private int row; // row coordinate
