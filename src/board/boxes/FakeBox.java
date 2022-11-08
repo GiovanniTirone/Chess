@@ -1,5 +1,5 @@
-package player.ai;
-import board.Box;
+package board.boxes;
+import board.boxes.Box;
 import lombok.Data;
 import pieces.Piece;
 

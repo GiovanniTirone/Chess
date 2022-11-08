@@ -1,5 +1,7 @@
-package board;
+package board.boxes;
 import Sources.PieceGUI;
+import board.boxes.Box;
+import board.boxes.BoxListener;
 import lombok.Data;
 import pieces.Piece;
 import javax.swing.*;

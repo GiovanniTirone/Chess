@@ -1,5 +1,5 @@
 package pieces;
-import board.RealBox;
+import board.boxes.RealBox;
 import lombok.Data;
 import moves.BoxMoves;
 import moves.Move;
@@ -40,7 +40,7 @@ public abstract class Piece {
     }*/
 
 
-    public abstract BoxMoves getPossibleMoves (RealBox currentRealBox, RealBox[][] board);
+    public abstract BoxMoves getPossibleMoves (Box currentBox, Box[][] board);
 
     public int getStrength () {
         return this.pieceName.getStrenght();

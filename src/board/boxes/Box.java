@@ -1,4 +1,4 @@
-package board;
+package board.boxes;
 
 
 import pieces.Piece;

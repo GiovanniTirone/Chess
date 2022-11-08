@@ -1,6 +1,6 @@
 package pieces;
 
-import board.RealBox;
+import board.boxes.RealBox;
 import board.MyChessBoard;
 import board.PlayerPieces;
 import moves.BoxMoves;

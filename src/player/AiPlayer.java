@@ -1,20 +1,17 @@
-package player.ai;
-
-import board.RealBox;
-import player.Player;
-
-
-import java.awt.*;
+package player;
+import board.boxes.FakeBox;
+import board.boxes.RealBox;
+import moves.Move;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class AiPlayer extends Player {
 
     public AiPlayer (boolean human, Color color) {
         super(human, color);
     }
-    /*
+
     public void makeMove (RealBox[][] board) {
         Node startingNode = new Node(createFakeBoardFromBoard(board));
         int bestValue = Integer.MIN_VALUE;
@@ -31,11 +28,11 @@ public class AiPlayer extends Player {
 
 
 
-    private int miniMax (Node node, int depth, boolean maximizingPlayer) {
-        if(depth == 0 || node.getChildren().size()==0) return node.evaluate();
+    private int miniMax (FakeBox [][] board, int depth, boolean maximizingPlayer) {
+        if(depth == 0 || node.getChildren().size()==0) return evaluateBoard(board);
         if(maximizingPlayer){
             int value = Integer.MIN_VALUE;
-            for(NodeChild child : node.getChildren()){
+            for(Move move : node.getChildren()){
                 value = Math.max(value,miniMax(child,depth-1,false));
             }
             return value;
@@ -62,8 +59,19 @@ public class AiPlayer extends Player {
         return fakeBoxes;
     }
 
-    private Stream<FakeMove> createPossibleMoves (Box[][] board){
-        List<FakeMove> possibleFakeMoves = new ArrayList<>();
+    private int evaluateBoard(FakeBox[][]board) {
+        int result = 0;
+        for(int i=0; i<8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if(board[i][j].getCurrentPiece()!=null)
+                    result += board[i][j].getCurrentPiece().getStrength();
+            }
+        }
+        return result;
+    }
+
+    private List<Move> getPossibleMoves (FakeBox[][] board){
+        List<Move> possibleFakeMoves = new ArrayList<>();
         for(int i=0; i<8; i++) {
             for (int j = 0; j < 8; j++) {
                 if(board[i][j].getCurrentPiece()!=null) {
@@ -75,6 +83,6 @@ public class AiPlayer extends Player {
             }
         }
     }
-    */
+
 
 }

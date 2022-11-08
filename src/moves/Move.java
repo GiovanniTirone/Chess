@@ -1,6 +1,6 @@
 package moves;
-import board.Box;
-import board.RealBox;
+import board.boxes.Box;
+import board.boxes.RealBox;
 import lombok.Data;
 
 @Data

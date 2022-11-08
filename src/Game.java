@@ -1,4 +1,4 @@
-import board.RealBox;
+import board.boxes.RealBox;
 
 public class Game {
 

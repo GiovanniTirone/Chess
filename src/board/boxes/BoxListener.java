@@ -1,4 +1,5 @@
-package board;
+package board.boxes;
+import board.MyChessBoard;
 import lombok.Data;
 
 import javax.swing.*;

@@ -1,7 +1,6 @@
-package player.human;
-import board.RealBox;
+package player;
+import board.boxes.RealBox;
 import moves.BoxMoves;
-import player.Player;
 
 import java.awt.*;
 
