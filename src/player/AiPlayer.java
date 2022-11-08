@@ -2,7 +2,11 @@ package player;
 
 import board.Box;
 
+
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 
 public class AiPlayer extends Player{
 
@@ -13,12 +17,12 @@ public class AiPlayer extends Player{
     public void makeMove (Box [][] board) {
         Node startingNode = new Node(createFakeBoardFromBoard(board));
         int bestValue = Integer.MIN_VALUE;
-        Move bestMove = null;
+        FakeMove bestFakeMove = null;
         for(Node child : startingNode.getChildren()){
             int tempValue = miniMax(child,0,true);
             if(tempValue>bestValue) {
                 bestValue = tempValue;
-                bestMove =
+                bestFakeMove =
             }
         }
     }
@@ -56,5 +60,20 @@ public class AiPlayer extends Player{
         }
         return fakeBoxes;
     }
+
+    private Stream<FakeMove> createPossibleMoves (FakeBox[][] board){
+        List<FakeMove> possibleFakeMoves = new ArrayList<>();
+        for(int i=0; i<8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if(board[i][j].getCurrentPiece()!=null) {
+                    board[i][j].getCurrentPiece()
+                                .getPossibleMoves( board[i][j], board)
+                                .stream()
+                                .forEach(move-> possibleFakeMoves.add(move));
+                }
+            }
+        }
+    }
+
 
 }

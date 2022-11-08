@@ -1,13 +1,14 @@
 package player;
 import lombok.Data;
+import moves.Move;
 
 @Data
-public class Move {
+public class FakeMove extends Move {
 
     private FakeBox start;
     private FakeBox end;
 
-    public Move (FakeBox startingBox, FakeBox endingBox) {
+    public FakeMove(FakeBox startingBox, FakeBox endingBox) {
         this.start = startingBox;
         this.end = endingBox;
     }

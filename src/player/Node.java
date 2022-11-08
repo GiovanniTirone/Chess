@@ -6,25 +6,23 @@ import java.util.List;
 @Data
 public class Node {
 
-    private FakeBox [][] fakeBoard;
-
-    private List <NodeChild> children;
+    private FakeMove fakeMove;
+    private List <Node> children;
 
     public Node () {
-        this.fakeBoard = new FakeBox[8][8];
         this.children = new ArrayList<>();
     }
 
-    public Node(FakeBox[][] fakeBoard){
-        this.fakeBoard = fakeBoard;
+    public Node(FakeMove fakeMove){
+        this.fakeMove = fakeMove;
         this.children = new ArrayList<>();
     }
 
-    public void addChild (Move move) {
-        children.add(new NodeChild(move.makeMove(fakeBoard)));
+    public void addChild (FakeMove fakeMove) {
+        children.add(new Node(fakeMove));
     }
 
-    public int evaluate ( ) {
+    public int evaluate () {
         int result = 0;
         for(int i=0; i<8; i++) {
             for(int j=0; j<8; j++) {

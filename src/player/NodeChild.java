@@ -4,11 +4,11 @@ import lombok.Data;
 @Data
 public class NodeChild extends Node{
 
-    private Move move;
+    private FakeMove fakeMove;
 
-    public NodeChild (FakeBox[][] fakeBoard,Move move) {
+    public NodeChild (FakeBox[][] fakeBoard, FakeMove fakeMove) {
         super(fakeBoard);
-        this.move = move;
+        this.fakeMove = fakeMove;
     }
 
 }

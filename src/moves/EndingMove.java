@@ -2,7 +2,7 @@ package moves;
 import lombok.Data;
 
 @Data
-public class EndingMove {
+public class EndingMove extends Move{
     private int row;
     private int col;
 
