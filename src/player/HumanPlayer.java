@@ -1,8 +1,8 @@
 package player;
 import board.boxes.RealBox;
 import moves.BoxMoves;
-
 import java.awt.*;
+import java.util.concurrent.CompletableFuture;
 
 public class HumanPlayer extends Player {
 
@@ -12,8 +12,9 @@ public class HumanPlayer extends Player {
 
     @Override
     public boolean makeMove(RealBox[][] board) {
+        CompletableFuture.supplyAsync(() -> {
 
-        return ;
+        })
     }
 
     public BoxMoves getPossibleMoves (RealBox starterRealBox, RealBox[][] board) throws Exception {
