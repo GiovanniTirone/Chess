@@ -4,6 +4,8 @@ import lombok.Data;
 import pieces.Piece;
 import javax.swing.*;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 
 @Data
@@ -16,11 +18,23 @@ public class RealBox extends JButton implements IBox {
     private boolean isBlack;
     private boolean pressed;
 
+    private boolean firstPressed;
+    private boolean secondPressed;
+    private PropertyChangeEvent changeFirstPressed_TrueToFalse;
+
+    private PropertyChangeEvent changeFirstPressed_FalseToTrue;
+    private PropertyChangeEvent changeSecondPressed_TrueToFalse;
+
+    private PropertyChangeEvent changeSecondPressed_FalseToTrue;
+
+
     public RealBox(int x, int y){
         this.row = x;
         this.col = y;
         this.pressed = false;
         this.pressListener = new BoxListener(this,null,null);
+        this.changeFirstPressed_TrueToFalse = new PropertyChangeEvent(this,"firstPressed",true,false);
+        this.changeSecondPressed_FalseToTrue = new PropertyChangeEvent(this,"secondPressed",false,true);
     }
 
     public void addPiece(Piece piece) {
@@ -44,6 +58,7 @@ public class RealBox extends JButton implements IBox {
     public void removeClickListener ( ){
         this.removeMouseListener(pressListener);
     }
+
 
     public void removePieceGUI () {
         this.remove(this.currentPiece.getJLabel());

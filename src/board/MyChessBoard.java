@@ -78,6 +78,7 @@ public class MyChessBoard {
         Arrays.stream(board).forEach(row -> Arrays.stream(row).forEach(RealBox::removeClickListener));
     }
 
+
     public void addPieceToBoard (int i, int j,Piece piece){
         board[i][j].addPiece(piece);
     }
