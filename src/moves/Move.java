@@ -29,6 +29,10 @@ public  class Move {
         return false;
     }
 
+    public boolean makeRealMove ( ){
+
+    }
+
     public void undo (IBox[][] board) {
         board[start.getRow()][start.getCol()].addPiece(
                 board[end.getRow()][end.getCol()].getCurrentPiece());
