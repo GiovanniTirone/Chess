@@ -1,4 +1,5 @@
 package moves;
+import board.MyChessBoard;
 import board.boxes.IBox;
 import board.boxes.RealBox;
 import lombok.Data;
@@ -6,10 +7,12 @@ import pieces.Piece;
 import pieces.PieceName;
 
 @Data
-public  class Move {
+public class Move {
 
     private IBox start;
     private IBox end;
+
+    public Move () {}
 
     public Move(IBox startingBox, IBox endingBox) {
         this.start = startingBox;
@@ -29,8 +32,24 @@ public  class Move {
         return false;
     }
 
-    public boolean makeRealMove ( ){
-
+    public boolean makeRealMove (RealBox [][] board){
+        RealBox startReal = (RealBox) start;
+        RealBox endReal = (RealBox) end;
+        Piece startPiece = startReal.getCurrentPiece();
+        Piece endPiece =  endReal.getCurrentPiece();
+        if(endPiece != null){  //se voglio spostare la logica delle possible moves dai pieces alle moves devo metterla qui
+            if(endPiece.getColor() != startPiece.getColor()){
+                if(endPiece.getPieceName() == PieceName.KING) return true;
+                endPiece.setLive(false);
+                endReal.removePiece();
+                endReal.removePieceGUI();
+            }
+        }
+        endReal.addPiece(startPiece);
+        endReal.addPieceGUI();
+        startReal.removePiece();
+        startReal.removePieceGUI();
+        return false;
     }
 
     public void undo (IBox[][] board) {

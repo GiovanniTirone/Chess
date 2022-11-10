@@ -4,6 +4,7 @@ import lombok.Data;
 import pieces.Piece;
 import javax.swing.*;
 import java.awt.*;
+import java.beans.BeanProperty;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -33,7 +34,7 @@ public class RealBox extends JButton implements IBox {
         this.col = y;
         this.pressed = false;
         this.pressListener = new BoxListener(this,null,null);
-        this.changeFirstPressed_TrueToFalse = new PropertyChangeEvent(this,"firstPressed",true,false);
+        this.changeFirstPressed_TrueToFalse = new PropertyChangeEvent(this, "firstPressed",true,false);
         this.changeSecondPressed_FalseToTrue = new PropertyChangeEvent(this,"secondPressed",false,true);
     }
 

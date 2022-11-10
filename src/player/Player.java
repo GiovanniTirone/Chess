@@ -1,9 +1,12 @@
 package player;
 
+import board.boxes.IBox;
 import board.boxes.RealBox;
 import lombok.Data;
 
 import java.awt.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Supplier;
 
 @Data
 public abstract class Player {
@@ -19,6 +22,8 @@ public abstract class Player {
         this.color = color;
     }
 
-    public abstract boolean makeMove(RealBox[][] board);
+    public Supplier<Boolean> makeMove;
+
+
 
 }

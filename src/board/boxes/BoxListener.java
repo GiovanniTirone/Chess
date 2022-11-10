@@ -60,9 +60,7 @@ public class BoxListener implements MouseListener {
                         realBox.setPressed(true);
                         realBox.setFirstPressed(true);
                     } else if (MyChessBoard.currentPossibleMoves.containsEndingMove(realBox.getRow(), realBox.getCol())) {
-                        realBox.getCurrentPiece().setLive(false); //spostare in move???
-                        realBox.removePieceGUI();
-                        realBox.removePiece();
+
                         realBox.setSecondPressed(true); // SECOND false -> true
                         //implementare la logica di gioco
                         System.out.println("-------------------------------------");
@@ -71,10 +69,7 @@ public class BoxListener implements MouseListener {
                         System.out.println("New box: " + realBox);
                         MyChessBoard.currentPressedRealBox.setPressed(false);
                         MyChessBoard.currentPressedRealBox.setFirstPressed(false); // FIRST true -> false
-                        MyChessBoard.currentPressedRealBox.removePieceGUI();
-                        realBox.addPiece(MyChessBoard.currentPressedRealBox.getCurrentPiece());
                         System.out.println("Fill the new box: " + realBox);
-                        MyChessBoard.currentPressedRealBox.removePiece();
                         MyChessBoard.currentPressedRealBox = null;
                         realBox.setSecondPressed(false); //SECOND true -> false
                         jFrame.setVisible(true);
