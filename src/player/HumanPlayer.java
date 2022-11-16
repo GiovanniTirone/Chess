@@ -24,7 +24,7 @@ public class HumanPlayer extends Player {
 
     private Runnable  AddChangePressedListenersUntilFillTheMove;
     private boolean fillTheMove;
-    private PropertyChangeListener changePressedListener;
+    private IsPressedListener isPressedListener;
 
 
     public HumanPlayer (Color color,RealBox[][] board){
@@ -32,7 +32,9 @@ public class HumanPlayer extends Player {
         this.board = board;
         fillTheMove = false;
         nextMove = new Move();
-        changePressedListener = evt -> {
+        this.isPressedListener = new IsPressedListener(this);
+
+        /*changePressedListener = evt -> {
             if(evt.getSource().getClass() == RealBox.class) {
                     if(evt.getPropertyName().equals("firstPressed") && evt.getOldValue().equals(false)){
                         System.out.println("ChangePressedListener: FIRST: false -> true");
@@ -49,7 +51,7 @@ public class HumanPlayer extends Player {
             while(!fillTheMove){
                 System.out.println("wait");
             }
-        };
+        };*/
     }
 
 
@@ -57,6 +59,7 @@ public class HumanPlayer extends Player {
         if(starterRealBox.getCurrentPiece()==null) throw new Exception("The starter box must contain a piece!!");
         return starterRealBox.getCurrentPiece().getPossibleMoves(starterRealBox,board);
     }
+
 
     public static void main(String[] args) throws Exception {
 
@@ -90,7 +93,7 @@ public class HumanPlayer extends Player {
 
         Arrays.stream(cb.getBoard()).forEach(row -> Arrays.stream(row)
                 .forEach(realBox -> realBox
-                        .addPropertyChangeListener(p1.changePressedListener)));
+                        .addIsPressedListener(p1.getIsPressedListener())));
 
 
         CompletableFuture p1_turn = new CompletableFuture<>();

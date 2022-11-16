@@ -2,11 +2,14 @@ package board.boxes;
 import Sources.PieceGUI;
 import lombok.Data;
 import pieces.Piece;
+import player.IsPressedListener;
+
 import javax.swing.*;
 import java.awt.*;
 import java.beans.BeanProperty;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
 
 @Data
@@ -21,21 +24,15 @@ public class RealBox extends JButton implements IBox {
 
     private boolean firstPressed;
     private boolean secondPressed;
-    private PropertyChangeEvent changeFirstPressed_TrueToFalse;
 
-    private PropertyChangeEvent changeFirstPressed_FalseToTrue;
-    private PropertyChangeEvent changeSecondPressed_TrueToFalse;
-
-    private PropertyChangeEvent changeSecondPressed_FalseToTrue;
-
+    private PropertyChangeSupport propertyChangeSupport;
 
     public RealBox(int x, int y){
         this.row = x;
         this.col = y;
         this.pressed = false;
         this.pressListener = new BoxListener(this,null,null);
-        this.changeFirstPressed_TrueToFalse = new PropertyChangeEvent(this, "firstPressed",true,false);
-        this.changeSecondPressed_FalseToTrue = new PropertyChangeEvent(this,"secondPressed",false,true);
+        this.propertyChangeSupport = new PropertyChangeSupport(this);
     }
 
     public void addPiece(Piece piece) {
@@ -67,6 +64,10 @@ public class RealBox extends JButton implements IBox {
 
     public void addPieceGUI (){
        this.add(this.currentPiece.getJLabel());
+    }
+
+    public void addIsPressedListener (IsPressedListener isPressedListener) {
+        propertyChangeSupport.addPropertyChangeListener(isPressedListener);
     }
 
     public boolean isBorderBox () {
