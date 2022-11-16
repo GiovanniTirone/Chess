@@ -21,6 +21,7 @@ public class IsPressedListener implements PropertyChangeListener {
         }
         if(evt.getPropertyName().equals("secondPressed")){
             humanPlayer.getNextMove().setEnd((RealBox)evt.getSource());
+            humanPlayer.setFillTheMove(true);
             System.out.println("Next move: " + humanPlayer.getNextMove());
         }
     }

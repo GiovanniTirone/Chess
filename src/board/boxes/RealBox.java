@@ -31,7 +31,7 @@ public class RealBox extends JButton implements IBox {
         this.col = y;
         this.firstPressed = false;
         this.secondPressed = false;
-        this.pressListener = new BoxListener(this,null,null);
+        this.pressListener = new BoxListener(this,null);
         this.propertyChangeSupport = new PropertyChangeSupport(this);
     }
 

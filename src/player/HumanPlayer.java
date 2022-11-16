@@ -4,11 +4,10 @@ import board.PlayerPieces;
 import board.boxes.RealBox;
 import lombok.Data;
 import moves.BoxMoves;
-import moves.MakeRealMove;
+import moves.MakeRealMoveRunnable;
 import moves.Move;
 import javax.swing.*;
 import java.awt.*;
-import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 
@@ -20,9 +19,11 @@ public class HumanPlayer extends Player {
 
     private Move nextMove;
 
-    private MakeRealMove makeRealMove;
+    private Runnable makeRealMove;
 
-    private Runnable  AddChangePressedListenersUntilFillTheMove;
+
+    private Runnable waitFillTheMove;
+
     private boolean fillTheMove;
     private IsPressedListener isPressedListener;
 
@@ -34,24 +35,21 @@ public class HumanPlayer extends Player {
         nextMove = new Move();
         this.isPressedListener = new IsPressedListener(this);
 
-        /*changePressedListener = evt -> {
-            if(evt.getSource().getClass() == RealBox.class) {
-                    if(evt.getPropertyName().equals("firstPressed") && evt.getOldValue().equals(false)){
-                        System.out.println("ChangePressedListener: FIRST: false -> true");
-                        nextMove.setStart((RealBox)evt.getSource());
-                    }
-                    if(evt.getPropertyName().equals("secondPressed") && evt.getOldValue().equals(false)){
-                        System.out.println("ChangePressedListener: FIRST: false -> true");
-                        nextMove.setEnd((RealBox)evt.getSource());
-                        fillTheMove = true;
-                    }
+        this.waitFillTheMove = () -> {
+            while(!fillTheMove) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                System.out.println("..........wait fill the move...........");
             }
+        } ;
+
+        this.makeRealMove = () -> {
+            nextMove.makeRealMove(board);
         };
-        AddChangePressedListenersUntilFillTheMove = () -> {
-            while(!fillTheMove){
-                System.out.println("wait");
-            }
-        };*/
+
     }
 
 
@@ -82,7 +80,7 @@ public class HumanPlayer extends Player {
 
 
         //IMPORTANTE: settare jFrame e board nei box listeners
-        Arrays.stream(cb.getBoard()).forEach(row -> Arrays.stream(row).forEach(box -> box.getPressListener().setJFrame(f)));
+      //  Arrays.stream(cb.getBoard()).forEach(row -> Arrays.stream(row).forEach(box -> box.getPressListener().setJFrame(f)));
         Arrays.stream(cb.getBoard()).forEach(row -> Arrays.stream(row).forEach(box -> box.getPressListener().setBoard(cb.getBoard())));
 
         cb.addBoxListeners();

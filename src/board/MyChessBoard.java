@@ -132,7 +132,7 @@ public class MyChessBoard {
 
 
         //IMPORTANTE: settare jFrame e board nei box listeners
-        Arrays.stream(cb.board).forEach(row -> Arrays.stream(row).forEach(box -> box.getPressListener().setJFrame(f)));
+        //Arrays.stream(cb.board).forEach(row -> Arrays.stream(row).forEach(box -> box.getPressListener().setJFrame(f)));
         Arrays.stream(cb.board).forEach(row -> Arrays.stream(row).forEach(box -> box.getPressListener().setBoard(cb.board)));
 
         cb.addBoxListeners();
