@@ -20,7 +20,6 @@ public class RealBox extends JButton implements IBox {
     private int col; // col coordinate
     private BoxListener pressListener;
     private boolean isBlack;
-    private boolean pressed;
 
     private boolean firstPressed;
     private boolean secondPressed;
@@ -30,7 +29,8 @@ public class RealBox extends JButton implements IBox {
     public RealBox(int x, int y){
         this.row = x;
         this.col = y;
-        this.pressed = false;
+        this.firstPressed = false;
+        this.secondPressed = false;
         this.pressListener = new BoxListener(this,null,null);
         this.propertyChangeSupport = new PropertyChangeSupport(this);
     }
@@ -79,7 +79,8 @@ public class RealBox extends JButton implements IBox {
         return "Box (" + row  + ","  +col +")"  +
                 "\n currentPiece: " + currentPiece +
                 //"\n pressListener: " + pressListener +
-                "\n pressed=" + pressed +
-                "\n isBlack=" + isBlack ;
+                "\nfirstPressed=" + firstPressed +
+                "\nsecondPressed=" + secondPressed +
+                "\nisBlack=" + isBlack ;
     }
 }
