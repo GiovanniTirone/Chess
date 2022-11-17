@@ -26,6 +26,7 @@ public class RealBox extends JButton implements IBox {
 
     private PropertyChangeSupport propertyChangeSupport;
 
+
     public RealBox(int x, int y){
         this.row = x;
         this.col = y;

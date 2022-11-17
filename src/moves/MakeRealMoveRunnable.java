@@ -8,6 +8,6 @@ public class MakeRealMoveRunnable extends MakeMoveRunnable {
 
     @Override
     public void run() {
-        move.makeRealMove((RealBox[][])board);
+        move.makeMove();
     }
 }

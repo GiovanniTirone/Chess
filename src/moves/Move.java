@@ -14,60 +14,57 @@ import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 
 @Data
-public class Move {
+public abstract class Move<someBox extends IBox>{
 
-    private IBox start;
-    private IBox end;
+    private someBox start;
+    private someBox end;
 
     public Move () {}
 
-    public Move(IBox startingBox, IBox endingBox) {
+    public Move(someBox startingBox, someBox endingBox) {
         this.start = startingBox;
         this.end = endingBox;
     }
 
 
-    public boolean makeMove (IBox[][] board) {
-        Piece startPiece = board[start.getRow()][start.getCol()].getCurrentPiece();
-        Piece endPiece =  board[end.getRow()][end.getCol()].getCurrentPiece();
-        if(endPiece != null){  //se voglio spostare la logica delle possible moves dai pieces alle moves devo metterla qui
-            if(endPiece.getColor() != startPiece.getColor() && endPiece.getPieceName() == PieceName.KING)
-                return true;
-        }
-        board[end.getRow()][end.getCol()].addPiece(startPiece);
-        board[start.getRow()][start.getCol()].removePiece();
-        return false;
-    }
-
-    public boolean makeRealMove (RealBox [][] board){
-        RealBox startReal = (RealBox) start;
-        RealBox endReal = (RealBox) end;
-        Piece startPiece = startReal.getCurrentPiece();
-        Piece endPiece =  endReal.getCurrentPiece();
+    public  boolean makeMove (){
+        Piece startPiece = start.getCurrentPiece();
+        Piece endPiece = end.getCurrentPiece();
         if(endPiece != null){  //se voglio spostare la logica delle possible moves dai pieces alle moves devo metterla qui
             if(endPiece.getColor() != startPiece.getColor()){
                 if(endPiece.getPieceName() == PieceName.KING) return true;
                 endPiece.setLive(false);
-                endReal.removePiece();
-                endReal.removePieceGUI();
+                removePieceFromEnd();
             }
         }
-        endReal.addPiece(startPiece);
-        endReal.addPieceGUI();
-        startReal.removePiece();
-        startReal.removePieceGUI();
+        addPieceToEnd(startPiece);
+        removePieceFromStart();
         return false;
+    };
+
+    protected void removePieceFromStart () {
+        start.removePiece();
+    };
+    protected void removePieceFromEnd () {
+        end.removePiece();
+    };
+    protected void addPieceToEnd (Piece pieceToAdd){
+        end.addPiece(pieceToAdd);
+    };
+
+    protected void addPieceToStart (Piece pieceToAdd){
+        start.addPiece(pieceToAdd);
     }
 
-    public void undo (IBox[][] board) {
-        board[start.getRow()][start.getCol()].addPiece(
-                board[end.getRow()][end.getCol()].getCurrentPiece());
-        board[end.getRow()][end.getCol()].removePiece();
+
+    public void undo () {
+        addPieceToStart(end.getCurrentPiece());
+        removePieceFromEnd();
     }
 
 
     public boolean checkEndingRowCol (int row, int col){
-        return end.getRow()==row&&end.getCol()==col ? true : false;
+        return end.getRow()==row && end.getCol()==col ? true : false;
     }
 
 
@@ -97,7 +94,7 @@ public class Move {
         cb.addBoxListeners();
 
 
-        HumanPlayer p1 = new HumanPlayer(Color.WHITE,cb.getBoard());
+       HumanPlayer p1 = new HumanPlayer(Color.WHITE,cb.getBoard(),f);
 
 
         Arrays.stream(cb.getBoard()).forEach(row -> Arrays.stream(row)
@@ -108,10 +105,7 @@ public class Move {
         CompletableFuture p1_turn = CompletableFuture.runAsync(p1.getWaitFillTheMove())
                                                     .thenRun(p1.getMakeRealMove());
 
-/*
-        p1_turn.thenRunAsync(p1.AddChangePressedListenersUntilFillTheMove)
-                        .thenApply(p1.makeRealMove);
-*/
+
         f.setVisible(true);
     }
 

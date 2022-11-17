@@ -17,7 +17,7 @@ public class BoxMoves extends ArrayList<Move> {
     public void addMove(int row, int col, IBox[][] board){
         if(box.getCurrentPiece()!=null&&board[row][col].getCurrentPiece()!=null)
         if(box.getCurrentPiece().getColor() == board[row][col].getCurrentPiece().getColor())return;
-        this.add(new Move(new FakeBox(box.getRow(),box.getCol()) ,new FakeBox(row,col)));
+        this.add(new FakeMove(new FakeBox(box.getRow(),box.getCol()) ,new FakeBox(row,col)));
     }
 
     public void removeMove(int row, int col){

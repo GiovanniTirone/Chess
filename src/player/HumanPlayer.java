@@ -6,6 +6,8 @@ import lombok.Data;
 import moves.BoxMoves;
 import moves.MakeRealMoveRunnable;
 import moves.Move;
+import moves.RealMove;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
@@ -28,11 +30,11 @@ public class HumanPlayer extends Player {
     private IsPressedListener isPressedListener;
 
 
-    public HumanPlayer (Color color,RealBox[][] board){
+    public HumanPlayer (Color color,RealBox[][] board,JFrame jFrame){
         super(true,color);
         this.board = board;
         fillTheMove = false;
-        nextMove = new Move();
+        nextMove = new RealMove(jFrame);
         this.isPressedListener = new IsPressedListener(this);
 
         this.waitFillTheMove = () -> {
@@ -47,7 +49,7 @@ public class HumanPlayer extends Player {
         } ;
 
         this.makeRealMove = () -> {
-            nextMove.makeRealMove(board);
+            nextMove.makeMove();
         };
 
     }
@@ -86,7 +88,7 @@ public class HumanPlayer extends Player {
         cb.addBoxListeners();
 
 
-        HumanPlayer p1 = new HumanPlayer(Color.WHITE,cb.getBoard());
+        HumanPlayer p1 = new HumanPlayer(Color.WHITE,cb.getBoard(),f);
 
 
         Arrays.stream(cb.getBoard()).forEach(row -> Arrays.stream(row)

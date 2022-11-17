@@ -17,6 +17,6 @@ public class MakeMoveRunnable implements Runnable {
 
     @Override
     public void run() {
-        move.makeMove(board);
+        move.makeMove();
     }
 }

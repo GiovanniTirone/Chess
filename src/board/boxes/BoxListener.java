@@ -135,7 +135,7 @@ public class BoxListener implements MouseListener {
         cb.addBoxListeners();
 
 
-        HumanPlayer p1 = new HumanPlayer(Color.WHITE,cb.getBoard());
+        HumanPlayer p1 = new HumanPlayer(Color.WHITE,cb.getBoard(),f);
 
 
         Arrays.stream(cb.getBoard()).forEach(row -> Arrays.stream(row)

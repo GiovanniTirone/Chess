@@ -19,15 +19,15 @@ public class AiPlayer extends Player {
         int bestValue = Integer.MIN_VALUE;
         Move bestMove = null;
         for(Move move : possibleMoves){
-            move.makeMove(fakeBoard);
+            move.makeMove();
             int tempValue = miniMax(fakeBoard,0,true);
-            move.undo(fakeBoard);
+            //move.undo(fakeBoard);
             if(tempValue>bestValue) {
                 bestValue = tempValue;
                 bestMove = move;
             }
         }
-        return bestMove.makeMove(board);
+        return bestMove.makeMove();
     }
 
 
@@ -38,17 +38,17 @@ public class AiPlayer extends Player {
         if(maximizingPlayer){
             int value = Integer.MIN_VALUE;
             for(Move move : getPossibleMoves(board)){
-                move.makeMove(board);
+               // move.makeMove();
                 value = Math.max(value,miniMax(board,depth+1,false));
-                move.undo(board);
+               // move.undo(board);
             }
             return value;
         }else{
             int value = Integer.MAX_VALUE;
             for(Move move : getPossibleMoves(board)){
-                move.makeMove(board);
+                move.makeMove();
                 value = Math.min(value,miniMax(board,depth+1,true));
-                move.undo(board);
+               // move.undo(board);
             }
             return value;
         }
