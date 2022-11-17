@@ -22,14 +22,17 @@ public class RealMove extends Move<RealBox> {
 
     @Override
     protected void removePieceFromStart() {
-        super.removePieceFromStart();
+        System.out.println("----------RemovePieceFromStart------------");
+        System.out.println("start box: " + getStart());
         getStart().removePieceGUI();
+        super.removePieceFromStart();
+        System.out.println("start box: " + getStart());
     }
 
     @Override
     protected void removePieceFromEnd() {
-        super.removePieceFromEnd();
         getEnd().removePieceGUI();
+        super.removePieceFromEnd();
     }
 
     @Override
@@ -43,5 +46,6 @@ public class RealMove extends Move<RealBox> {
     protected void addPieceToStart(Piece pieceToAdd){
         super.addPieceToStart(pieceToAdd);
         getStart().addPieceGUI();
+        jFrame.setVisible(true);
     }
 }
