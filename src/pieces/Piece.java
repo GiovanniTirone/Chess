@@ -15,12 +15,12 @@ public abstract class Piece {
     private boolean live;
 
 
-   private BoxMoves[][] possibleMoves;
+   //private BoxMoves[][] possibleMoves;
     public Piece (Color color,PieceName pieceName) {
         this.color = color;
         this.pieceName = pieceName;
         this.live = true;
-        this.possibleMoves = new BoxMoves[8][8];
+       // this.possibleMoves = new BoxMoves[8][8];
        /* for(int i=0; i<8; i++) {
             for (int j = 0; j < 8; j++) {
                 this.possibleMoves[i][j]=new BoxMoves();
@@ -51,6 +51,12 @@ public abstract class Piece {
             str+="[" + move.getEnd().getRow() +","+ move.getEnd().getCol() +"]";
         }
         return str;
+    }
+
+    @Override
+    public String toString () {
+        String colorStr = color == Color.BLACK ? "BLACK" : "WHITE";
+        return "Name: " + pieceName.name() + " - " + colorStr + " - " + jLabel ;
     }
 
 }

@@ -1,7 +1,6 @@
 package player;
 
 import board.boxes.RealBox;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 

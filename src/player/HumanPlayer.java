@@ -23,7 +23,6 @@ public class HumanPlayer extends Player {
 
     private Runnable makeRealMove;
 
-
     private Runnable waitFillTheMove;
 
     private boolean fillTheMove;

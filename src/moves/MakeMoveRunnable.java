@@ -2,13 +2,13 @@ package moves;
 import board.boxes.IBox;
 
 
-public class MakeMoveRunnable implements Runnable {
+public class MakeMoveRunnable <someBox extends IBox> implements Runnable {
 
-    IBox[][] board;
+    someBox [][] board;
 
     Move move ;
 
-    public MakeMoveRunnable(IBox[][] board, Move move){
+    public MakeMoveRunnable(someBox [][] board, Move move){
         super();
         this.board = board;
         this.move = move;

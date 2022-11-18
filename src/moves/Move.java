@@ -37,8 +37,8 @@ public abstract class Move<someBox extends IBox>{
                 removePieceFromEnd();
             }
         }
-        addPieceToEnd(startPiece);
         removePieceFromStart();
+        addPieceToEnd(startPiece);
         return false;
     };
 
@@ -105,6 +105,7 @@ public abstract class Move<someBox extends IBox>{
         CompletableFuture p1_turn = CompletableFuture.runAsync(p1.getWaitFillTheMove())
                                                     .thenRun(p1.getMakeRealMove());
 
+       // cb.getBoard()[6][2].removePieceGUI();
 
         f.setVisible(true);
     }
