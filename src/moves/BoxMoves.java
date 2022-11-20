@@ -5,7 +5,8 @@ import board.boxes.FakeBox;
 import java.util.ArrayList;
 
 @Data
-public class BoxMoves<someMove extends Move> extends ArrayList<someMove> {
+//public class BoxMoves <someMove extends Move> extends ArrayList <someMove> {
+public class BoxMoves extends ArrayList <FakeMove> {
 
     private IBox box;
 
@@ -16,12 +17,12 @@ public class BoxMoves<someMove extends Move> extends ArrayList<someMove> {
 
     public void addMove(int row, int col, IBox[][] board){
         if(box.getCurrentPiece()!=null&&board[row][col].getCurrentPiece()!=null)
-        if(box.getCurrentPiece().getColor() == board[row][col].getCurrentPiece().getColor())return;
-        this.add(new FakeMove(new FakeBox(box.getRow(),box.getCol()) ,new FakeBox(row,col)));
+        if(box.getCurrentPiece().getColor() == board[row][col].getCurrentPiece().getColor()) return;
+        this.add(new FakeMove(new FakeBox(box.getRow(),box.getCol(),box.getCurrentPiece()) ,new FakeBox(row,col,board[row][col].getCurrentPiece())));
     }
 
     public void removeMove(int row, int col){
-        for(Move move : this) {
+        for(FakeMove move : this) {
             if(move.checkEndingRowCol(row,col)) {
                 this.remove(move);
                 break;

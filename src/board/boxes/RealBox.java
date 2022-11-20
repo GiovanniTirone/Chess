@@ -36,6 +36,16 @@ public class RealBox extends JButton implements IBox {
         this.propertyChangeSupport = new PropertyChangeSupport(this);
     }
 
+    public RealBox(int x, int y,Piece currentPiece){
+        this.row = x;
+        this.col = y;
+        this.currentPiece = currentPiece;
+        this.firstPressed = false;
+        this.secondPressed = false;
+        this.pressListener = new BoxListener(this,null);
+        this.propertyChangeSupport = new PropertyChangeSupport(this);
+    }
+
     public void addPiece(Piece piece) {
         this.currentPiece = piece;
         currentPiece.setJLabel(

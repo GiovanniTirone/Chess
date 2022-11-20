@@ -56,7 +56,12 @@ public abstract class Piece {
     @Override
     public String toString () {
         String colorStr = color == Color.BLACK ? "BLACK" : "WHITE";
-        return "Name: " + pieceName.name() + " - " + colorStr + " - " + jLabel ;
+        return "Name: " + pieceName.name() + " - " + colorStr; // + " - " + jLabel ;
     }
-
+    public void printAllDetails () {
+        System.out.println("PieceName: "+pieceName);
+        System.out.println("Color: " + color);
+        System.out.println("JLabel: " + jLabel);
+        System.out.println("Live: " + live);
+    }
 }

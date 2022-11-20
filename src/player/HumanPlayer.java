@@ -19,7 +19,7 @@ public class HumanPlayer extends Player {
 
     private RealBox[][] board;
 
-    private Move nextMove;
+    private RealMove nextMove;
 
     private Runnable makeRealMove;
 

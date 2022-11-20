@@ -1,13 +1,13 @@
 package player;
+
 import board.MyChessBoard;
 import board.PlayerPieces;
-import board.boxes.FakeBox;
-import board.boxes.IBox;
+import board.boxes.FakeBox;;
 import board.boxes.RealBox;
 import moves.FakeMove;
 import moves.Move;
 import moves.RealMove;
-
+import pieces.Piece;
 import javax.swing.*;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -23,8 +23,8 @@ public class AiPlayer extends Player {
 
     JFrame jFrame;
 
-    public AiPlayer (boolean human, Color color, RealBox [][] board,JFrame jFrame) {
-        super(human, color);
+    public AiPlayer (Color color, RealBox [][] board,JFrame jFrame) {
+        super(false, color);
         this.board = board;
         this.jFrame = jFrame;
         makeMoveRunnable = () -> makeMove(board);
@@ -32,11 +32,13 @@ public class AiPlayer extends Player {
 
 
     public boolean makeMove (RealBox[][] board) {  //Inserire alphaBeta anche qui???
+        System.out.println("-------------------Make AI move-----------------------");
         FakeBox[][] fakeBoard = createFakeBoardFromBoard(board);
+        System.out.println("fakeboard" + fakeBoard);
         List<FakeMove> possibleMoves = getPossibleMoves(fakeBoard);
         int bestValue = Integer.MIN_VALUE;
-        Move bestMove = null;
-        for(Move move : possibleMoves){
+        FakeMove bestMove = null;
+        for(FakeMove move : possibleMoves){
             move.makeMove();
             int tempValue = alphaBeta(fakeBoard,0,true,Integer.MIN_VALUE,Integer.MAX_VALUE);
             move.undo();
@@ -45,7 +47,8 @@ public class AiPlayer extends Player {
                 bestMove = move;
             }
         }
-        return bestMove.makeMove();
+        System.out.println("Best move: " + bestMove);
+        return createRealMoveFromFakeMove(bestMove).makeMove();
     }
 
 
@@ -73,7 +76,8 @@ public class AiPlayer extends Player {
     }
 
     private int alphaBeta ( FakeBox[][] board, int depth, boolean maximizingPlayer, int a , int b) {
-        if (depth == 3) return evaluateBoard(board); //aggiungere vittoria
+        System.out.println("-----------------AlphaBeta at depth" + depth + "----------------");
+        if (depth == 2) return evaluateBoard(board); //aggiungere vittoria
         if (maximizingPlayer) {
             int value = Integer.MIN_VALUE;
             for (Move move : getPossibleMoves(board)) {
@@ -97,11 +101,13 @@ public class AiPlayer extends Player {
         }
     }
 
-    private FakeBox createFakeBoxFromBox (RealBox realBox) {
-        return new FakeBox(realBox.getRow(), realBox.getCol());
+    public FakeBox createFakeBoxFromBox (RealBox realBox) {
+        FakeBox fakeBox = new FakeBox(realBox.getRow(), realBox.getCol());
+        fakeBox.setCurrentPiece(realBox.getCurrentPiece());
+        return fakeBox;
     }
 
-    private FakeBox[][] createFakeBoardFromBoard (RealBox[][] board){
+    public FakeBox[][] createFakeBoardFromBoard (RealBox[][] board){
         FakeBox[][] fakeBoxes = new FakeBox[8][8];
         for(int i=0; i<8; i++){
             for(int j=0; j<8; j++){
@@ -111,10 +117,10 @@ public class AiPlayer extends Player {
         return fakeBoxes;
     }
 
-    private RealMove createRealMoveFromFakeMove (FakeMove fakeMove){
+    public RealMove createRealMoveFromFakeMove (FakeMove fakeMove){
         RealMove realMove = new RealMove(jFrame);
-        realMove.setStart(new RealBox(fakeMove.getStart().getRow(),fakeMove.getStart().getCol()));
-        realMove.setEnd(new RealBox(fakeMove.getEnd().getRow(),fakeMove.getEnd().getCol()));
+        realMove.setStart(new RealBox(fakeMove.getStart().getRow(),fakeMove.getStart().getCol(),fakeMove.getStart().getCurrentPiece()));
+        realMove.setEnd(new RealBox(fakeMove.getEnd().getRow(),fakeMove.getEnd().getCol(),fakeMove.getEnd().getCurrentPiece()));
         return realMove;
     }
 
@@ -129,18 +135,20 @@ public class AiPlayer extends Player {
         return result;
     }
 
-    private List<FakeMove> getPossibleMoves (FakeBox[][] board){
+    public List<FakeMove> getPossibleMoves (FakeBox[][] board){
+        System.out.println("------------getPossibleMoves from all the board --------------");
         List<FakeMove> possibleMoves = new ArrayList<>();
         for(int i=0; i<8; i++) {
             for (int j = 0; j < 8; j++) {
-                if(board[i][j].getCurrentPiece()!=null) {
-                    board[i][j].getCurrentPiece()
-                                .getPossibleMoves( board[i][j], board)
-                                .stream()
-                                .forEach(move-> possibleMoves.add(move));
+                Piece currentPiece = board[i][j].getCurrentPiece();
+                if(currentPiece!=null) {
+                    //System.out.println("get moves of box: " + i +" , " + j );
+                    currentPiece.getPossibleMoves( board[i][j], board)
+                            .forEach(move-> possibleMoves.add((FakeMove) move));
                 }
             }
         }
+        System.out.println("Possible moves: " + possibleMoves);
         return possibleMoves;
     }
 
@@ -171,7 +179,7 @@ public class AiPlayer extends Player {
 
 
         HumanPlayer p1 = new HumanPlayer(Color.WHITE,cb.getBoard(),f);
-        AiPlayer p2 = new AiPlayer(false,Color.BLACK,cb.getBoard(),f);
+        AiPlayer p2 = new AiPlayer(Color.BLACK,cb.getBoard(),f);
 
 
         Arrays.stream(cb.getBoard()).forEach(row -> Arrays.stream(row)
@@ -181,7 +189,14 @@ public class AiPlayer extends Player {
 
         CompletableFuture p1_turn = CompletableFuture.runAsync(p1.getWaitFillTheMove())
                 .thenRun(p1.getMakeRealMove())
-                .thenRun(p2.makeMoveRunnable);
+                .thenRun(p2.makeMoveRunnable)
+                .thenRun(()->{
+                    try {
+                        Thread.sleep(10000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
 
         // cb.getBoard()[6][2].removePieceGUI();
 
