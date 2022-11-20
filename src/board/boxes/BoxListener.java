@@ -110,8 +110,9 @@ public class BoxListener implements MouseListener {
 
     public static void main(String[] args) throws Exception {
 
-        MyChessBoard cb = new MyChessBoard();
+
         JFrame f = new JFrame("ChessChamp");
+        MyChessBoard cb = new MyChessBoard(f);
         f.add(cb.getGui());
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         f.setLocationByPlatform(true);

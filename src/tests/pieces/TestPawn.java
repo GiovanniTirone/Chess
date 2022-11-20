@@ -12,11 +12,11 @@ import java.awt.*;
 
 public class TestPawn {
 
-    private MyChessBoard cb = new MyChessBoard();
+    JFrame jFrame = new JFrame();
+
+    private MyChessBoard cb = new MyChessBoard(jFrame);
 
     private RealBox[][] board = cb.getBoard();
-
-    JFrame jFrame = new JFrame();
 
     private AiPlayer aiPlayer = new AiPlayer (Color.BLACK,  board,  jFrame);
 

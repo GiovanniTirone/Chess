@@ -48,7 +48,7 @@ public class AiPlayer extends Player {
             }
         }
         System.out.println("Best move: " + bestMove);
-        return createRealMoveFromFakeMove(bestMove).makeMove();
+        return createRealMoveFromFakeMove(bestMove,board).makeMove();
     }
 
 
@@ -117,10 +117,24 @@ public class AiPlayer extends Player {
         return fakeBoxes;
     }
 
-    public RealMove createRealMoveFromFakeMove (FakeMove fakeMove){
-        RealMove realMove = new RealMove(jFrame);
-        realMove.setStart(new RealBox(fakeMove.getStart().getRow(),fakeMove.getStart().getCol(),fakeMove.getStart().getCurrentPiece()));
-        realMove.setEnd(new RealBox(fakeMove.getEnd().getRow(),fakeMove.getEnd().getCol(),fakeMove.getEnd().getCurrentPiece()));
+    public RealBox findRealBoxFromFakeBox (FakeBox fakeBox,RealBox[][] board) {
+        for(int i=0; i<8; i++){
+            for(int j=0; j<8; j++) {
+                RealBox currentRealBox = board[i][j];
+                if (currentRealBox.getRow() == fakeBox.getRow() && currentRealBox.getCol() == fakeBox.getCol())
+                    return currentRealBox;
+            }
+        }
+        return null;
+    }
+
+
+    public RealMove createRealMoveFromFakeMove (FakeMove fakeMove,RealBox[][] board){
+        RealMove realMove = new RealMove();
+        realMove.setStart(findRealBoxFromFakeBox(fakeMove.getStart(),board));
+        realMove.setEnd(findRealBoxFromFakeBox(fakeMove.getEnd(),board));
+        /*realMove.setStart(new RealBox(fakeMove.getStart().getRow(),fakeMove.getStart().getCol(),jFrame,fakeMove.getStart().getCurrentPiece()));
+        realMove.setEnd(new RealBox(fakeMove.getEnd().getRow(),fakeMove.getEnd().getCol(),jFrame,fakeMove.getEnd().getCurrentPiece()));*/
         return realMove;
     }
 
@@ -153,8 +167,8 @@ public class AiPlayer extends Player {
     }
 
     public static void main(String[] args) throws Exception {
-        MyChessBoard cb = new MyChessBoard();
         JFrame f = new JFrame("ChessChamp");
+        MyChessBoard cb = new MyChessBoard(f);
         f.add(cb.getGui());
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         f.setLocationByPlatform(true);

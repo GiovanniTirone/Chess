@@ -1,19 +1,20 @@
-package tests.board.boxes.realBox;
+package tests.player.aiPlayer;
 
 import board.MyChessBoard;
 import board.boxes.RealBox;
 import pieces.Pawn;
+import player.AiPlayer;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class TestAddPieceGUI {
+public class TestMakeMove {
 
     public static void main(String[] args) {
 
         JFrame f = new JFrame("ChessChamp");
         MyChessBoard cb = new MyChessBoard(f);
-        RealBox [][] board = cb.getBoard();
+        RealBox[][] board = cb.getBoard();
         f.add(cb.getGui());
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         f.setLocationByPlatform(true);
@@ -22,10 +23,14 @@ public class TestAddPieceGUI {
         f.setVisible(true);
 
         board[0][0].addPiece(new Pawn(Color.BLACK));
+        board[0][0].addPieceGUI();
         System.out.println(board[0][0]);
         board[0][0].getCurrentPiece().printAllDetails();
-        board[0][0].addPieceGUI();
-        f.setVisible(true); // se non lo metto non si vede
+        f.setVisible(true);
+
+        AiPlayer aiPlayer = new AiPlayer(Color.BLACK,board,f);
+        aiPlayer.makeMove(board);
     }
+
 
 }

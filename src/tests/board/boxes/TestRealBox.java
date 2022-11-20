@@ -13,11 +13,11 @@ import java.util.Arrays;
 
 public class TestRealBox {
 
-    private MyChessBoard cb = new MyChessBoard();
+    JFrame jFrame = new JFrame();
+
+    private MyChessBoard cb = new MyChessBoard(jFrame);
 
     private RealBox[][] board = cb.getBoard();
-
-    JFrame jFrame = new JFrame();
 
 
     @AfterEach
@@ -54,7 +54,7 @@ public class TestRealBox {
         // ensures the minimum size is enforced.
         jFrame.setMinimumSize(jFrame.getSize());
         jFrame.setVisible(true);
-        RealBox realBox = new RealBox(0,0);
+        RealBox realBox = new RealBox(0,0,jFrame);
         realBox.setBlack(false);
         realBox.addPiece(new Pawn(Color.BLACK));
         System.out.println(realBox);

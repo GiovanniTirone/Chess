@@ -33,7 +33,7 @@ public class HumanPlayer extends Player {
         super(true,color);
         this.board = board;
         fillTheMove = false;
-        nextMove = new RealMove(jFrame);
+        nextMove = new RealMove();
         this.isPressedListener = new IsPressedListener(this);
 
         this.waitFillTheMove = () -> {
@@ -62,8 +62,9 @@ public class HumanPlayer extends Player {
 
     public static void main(String[] args) throws Exception {
 
-        MyChessBoard cb = new MyChessBoard();
+
         JFrame f = new JFrame("ChessChamp");
+        MyChessBoard cb = new MyChessBoard(f);
         f.add(cb.getGui());
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         f.setLocationByPlatform(true);
@@ -95,15 +96,15 @@ public class HumanPlayer extends Player {
                         .addIsPressedListener(p1.getIsPressedListener())));
 
 
-        CompletableFuture p1_turn = new CompletableFuture<>();
+        CompletableFuture p1_turn = CompletableFuture.runAsync(p1.getWaitFillTheMove())
+                .thenRun(p1.getMakeRealMove());
+
 
 /*
         p1_turn.thenRunAsync(p1.AddChangePressedListenersUntilFillTheMove)
                         .thenApply(p1.makeRealMove);
 */
         f.setVisible(true);
-
-
 
     }
 

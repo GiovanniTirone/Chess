@@ -15,6 +15,8 @@ import java.beans.PropertyChangeSupport;
 @Data
 public class RealBox extends JButton implements IBox {
 
+    JFrame jFrame;
+
     private Piece currentPiece;
     private int row; // row coordinate
     private int col; // col coordinate
@@ -27,7 +29,8 @@ public class RealBox extends JButton implements IBox {
     private PropertyChangeSupport propertyChangeSupport;
 
 
-    public RealBox(int x, int y){
+    public RealBox(int x, int y,JFrame jFrame){
+        this.jFrame = jFrame;
         this.row = x;
         this.col = y;
         this.firstPressed = false;
@@ -36,7 +39,8 @@ public class RealBox extends JButton implements IBox {
         this.propertyChangeSupport = new PropertyChangeSupport(this);
     }
 
-    public RealBox(int x, int y,Piece currentPiece){
+    public RealBox(int x, int y,JFrame jFrame,Piece currentPiece){
+        this.jFrame = jFrame;
         this.row = x;
         this.col = y;
         this.currentPiece = currentPiece;
@@ -50,14 +54,14 @@ public class RealBox extends JButton implements IBox {
         this.currentPiece = piece;
         currentPiece.setJLabel(
                 PieceGUI.getJLabelFromUnicodeChar(piece.getUnicodeChar(),piece.getColor(), Color.DARK_GRAY, isBlack));
-        this.add(this.currentPiece.getJLabel());
+        //this.add(this.currentPiece.getJLabel());
     }
 
     public void removePiece(){
-        if(this.currentPiece!=null){
+       // if(this.currentPiece!=null){
            // currentPiece.setJLabel(null);
             this.currentPiece = null;
-        }
+        //}
     }
 
     public void activateClickListener () {
@@ -71,10 +75,12 @@ public class RealBox extends JButton implements IBox {
 
     public void removePieceGUI () {
         this.remove(this.currentPiece.getJLabel());
+        jFrame.setVisible(false);
     }
 
     public void addPieceGUI (){
        this.add(this.currentPiece.getJLabel());
+       jFrame.setVisible(true);
     }
 
     public void addIsPressedListener (IsPressedListener isPressedListener) {

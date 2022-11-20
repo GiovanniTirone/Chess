@@ -7,16 +7,14 @@ import javax.swing.*;
 
 public class RealMove extends Move<RealBox> {
 
-    JFrame jFrame;
 
-    public RealMove(JFrame jFrame) {
+
+    public RealMove() {
         super();
-        this.jFrame = jFrame;
     }
 
     public RealMove(RealBox startingBox,RealBox endingBox,JFrame jFrame) {
         super(startingBox,endingBox);
-        this.jFrame = jFrame;
     }
 
 
@@ -31,21 +29,22 @@ public class RealMove extends Move<RealBox> {
 
     @Override
     protected void removePieceFromEnd() {
+        System.out.println("----------RemovePieceFromEnd------------");
         getEnd().removePieceGUI();
         super.removePieceFromEnd();
     }
 
     @Override
     protected void addPieceToEnd(Piece pieceToAdd) {
+        System.out.println("----------AddPieceToEnd------------");
         super.addPieceToEnd(pieceToAdd);
         getEnd().addPieceGUI();
-        jFrame.setVisible(true);
     }
 
     @Override
     protected void addPieceToStart(Piece pieceToAdd){
+        System.out.println("----------AddPieceToStart------------");
         super.addPieceToStart(pieceToAdd);
         getStart().addPieceGUI();
-        jFrame.setVisible(true);
     }
 }

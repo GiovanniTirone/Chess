@@ -10,9 +10,10 @@ import java.awt.*;
 public class TestAddPiece {
 
     public static void main(String[] args) {
-        MyChessBoard cb = new MyChessBoard();
-        RealBox [][] board = cb.getBoard();
+
         JFrame f = new JFrame("ChessChamp");
+        MyChessBoard cb = new MyChessBoard(f);
+        RealBox [][] board = cb.getBoard();
         f.add(cb.getGui());
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         f.setLocationByPlatform(true);

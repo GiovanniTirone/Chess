@@ -1,4 +1,4 @@
-package tests.player;
+package tests.player.aiPlayer;
 
 import board.MyChessBoard;
 import board.boxes.FakeBox;
@@ -19,12 +19,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TestAiPlayer {
+    JFrame jFrame = new JFrame();
 
-    private MyChessBoard cb = new MyChessBoard();
+    private MyChessBoard cb = new MyChessBoard(jFrame);
 
     private RealBox [][] board = cb.getBoard();
-
-    JFrame jFrame = new JFrame();
 
     private AiPlayer aiPlayer = new AiPlayer (Color.BLACK,  board,  jFrame);
 
@@ -71,7 +70,7 @@ public class TestAiPlayer {
         endBox.addPiece(new Pawn(Color.WHITE));
         FakeMove fakeMove = new FakeMove(startBox,endBox);
         System.out.println("FakeMove: \n" + fakeMove);
-        RealMove realMove = aiPlayer.createRealMoveFromFakeMove(fakeMove);
+        RealMove realMove = aiPlayer.createRealMoveFromFakeMove(fakeMove,board);
         System.out.println("Real Move: \n" + realMove);
     }
 

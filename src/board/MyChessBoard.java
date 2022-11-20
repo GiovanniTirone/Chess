@@ -20,9 +20,12 @@ public class MyChessBoard {
     private  RealBox[][] board;
     private JPanel boardPanel;
 
+    private JFrame jFrame;
+
     private static final String COLS = "ABCDEFGH";
 
-    public MyChessBoard()  {
+    public MyChessBoard(JFrame jFrame)  {
+        this.jFrame = jFrame;
         this.board = new RealBox[8][8];
         this.boardPanel = new JPanel(new GridLayout(0, 9));
         boardPanel.setBorder(new LineBorder(Color.BLACK));
@@ -32,7 +35,7 @@ public class MyChessBoard {
         Insets buttonMargin = new Insets(0, 0, 0, 0);
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                RealBox b = new RealBox(i, j);
+                RealBox b = new RealBox(i, j,jFrame);
                 b.setMargin(buttonMargin);
                 ImageIcon icon = new ImageIcon(new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
                 b.setIcon(icon);
@@ -81,6 +84,7 @@ public class MyChessBoard {
 
     public void addPieceToBoard (int i, int j,Piece piece){
         board[i][j].addPiece(piece);
+        board[i][j].addPieceGUI();
     }
 
     public void addPiecesInStarterPosition (PlayerPieces whitePieces, PlayerPieces blackPieces) throws Exception {
@@ -114,8 +118,9 @@ public class MyChessBoard {
     }
 
     public static void main(String[] args) throws Exception {
-        MyChessBoard cb = new MyChessBoard();
+
         JFrame f = new JFrame("ChessChamp");
+        MyChessBoard cb = new MyChessBoard(f);
         f.add(cb.gui);
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         f.setLocationByPlatform(true);

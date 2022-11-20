@@ -14,12 +14,11 @@ import java.util.Arrays;
 
 
 public class TestRealMove {
+    JFrame jFrame = new JFrame();
 
-    private MyChessBoard cb = new MyChessBoard();
+    private MyChessBoard cb = new MyChessBoard(jFrame);
 
     private RealBox[][] board = cb.getBoard();
-
-    JFrame jFrame = new JFrame();
 
 
     @AfterEach
