@@ -30,7 +30,7 @@ public  class PieceGUI {
                     gp = new GeneralPath();
                     gp.setWindingRule(windingRule);
                     gp.moveTo(coords[0], coords[1]);
-                    System.out.println(ii++ + " \t" + coords[0] + "," + coords[1]);
+                  //  System.out.println(ii++ + " \t" + coords[0] + "," + coords[1]);
                 } else if (pathSegmentType == PathIterator.SEG_LINETO) {
                     gp.lineTo(coords[0], coords[1]);
                 } else if (pathSegmentType == PathIterator.SEG_QUADTO) {
@@ -77,12 +77,12 @@ public  class PieceGUI {
 
             Shape shape1 = gv.getOutline();
             Rectangle r = shape1.getBounds();
-            System.out.println("shape rect: " + r);
+            //System.out.println("shape rect: " + r);
             int spaceX = sz - r.width;
             int spaceY = sz - r.height;
             AffineTransform trans = AffineTransform.getTranslateInstance(
                     -r.x + (spaceX / 2), -r.y + (spaceY / 2));
-            System.out.println("Box2D " + trans);
+            //System.out.println("Box2D " + trans);
 
             Shape shapeCentered = trans.createTransformedShape(shape1);
 
@@ -133,12 +133,12 @@ public  class PieceGUI {
 
         Shape shape1 = gv.getOutline();
         Rectangle r = shape1.getBounds();
-        System.out.println("shape rect: " + r);
+        //System.out.println("shape rect: " + r);
         int spaceX = sz - r.width;
         int spaceY = sz - r.height;
         AffineTransform trans = AffineTransform.getTranslateInstance(
                 -r.x + (spaceX / 2), -r.y + (spaceY / 2));
-        System.out.println("Box2D " + trans);
+        //System.out.println("Box2D " + trans);
 
         Shape shapeCentered = trans.createTransformedShape(shape1);
 

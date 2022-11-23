@@ -81,6 +81,15 @@ public class MyChessBoard {
         Arrays.stream(board).forEach(row -> Arrays.stream(row).forEach(RealBox::removeClickListener));
     }
 
+    public void clearPressedDatas () {
+        Arrays.stream(board).forEach(row -> Arrays.stream(row).forEach(box -> {
+            box.setFirstPressed(false);
+            box.setSecondPressed(false);
+            currentPressedRealBox = null;
+            currentPossibleMoves = null;
+        }));
+    }
+
 
     public void addPieceToBoard (int i, int j,Piece piece){
         board[i][j].addPiece(piece);

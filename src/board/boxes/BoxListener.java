@@ -55,7 +55,7 @@ public class BoxListener implements MouseListener {
     private void pressSecondFullBoxWithDifferentPieceColor () {
         //implementare la logica di gioco
         System.out.println("----------------Press second box with DIFFERENT color piece----------------");
-        realBox.setSecondPressed(false); //SECOND true -> false
+        realBox.setSecondPressed(true); //SECOND true -> false
         realBox.getPropertyChangeSupport().firePropertyChange("secondPressed",false,true); //FIRE PROPERTY
         //jFrame.setVisible(true); DA SPOSTARE IN MOVE
         System.out.println("-------------------------------------");
@@ -136,7 +136,7 @@ public class BoxListener implements MouseListener {
         cb.addBoxListeners();
 
 
-        HumanPlayer p1 = new HumanPlayer(Color.WHITE,cb.getBoard(),f);
+        HumanPlayer p1 = new HumanPlayer(Color.WHITE,cb.getBoard());
 
 
         Arrays.stream(cb.getBoard()).forEach(row -> Arrays.stream(row)

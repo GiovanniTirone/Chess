@@ -14,6 +14,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class AiPlayer extends Player {
 
@@ -26,8 +30,8 @@ public class AiPlayer extends Player {
     public AiPlayer (Color color, RealBox [][] board,JFrame jFrame) {
         super(false, color);
         this.board = board;
-        this.jFrame = jFrame;
-        makeMoveRunnable = () -> makeMove(board);
+        //this.jFrame = jFrame;
+        makeMoveRunnable = () -> makeMove(this.board);
     }
 
 
@@ -77,7 +81,7 @@ public class AiPlayer extends Player {
 
     private int alphaBeta ( FakeBox[][] board, int depth, boolean maximizingPlayer, int a , int b) {
         System.out.println("-----------------AlphaBeta at depth" + depth + "----------------");
-        if (depth == 2) return evaluateBoard(board); //aggiungere vittoria
+        if (depth == 3) return evaluateBoard(board); //aggiungere vittoria
         if (maximizingPlayer) {
             int value = Integer.MIN_VALUE;
             for (Move move : getPossibleMoves(board)) {
@@ -192,29 +196,46 @@ public class AiPlayer extends Player {
         cb.addBoxListeners();
 
 
-        HumanPlayer p1 = new HumanPlayer(Color.WHITE,cb.getBoard(),f);
+        HumanPlayer p1 = new HumanPlayer(Color.WHITE,cb.getBoard());
         AiPlayer p2 = new AiPlayer(Color.BLACK,cb.getBoard(),f);
-
+        f.setVisible(true);
 
         Arrays.stream(cb.getBoard()).forEach(row -> Arrays.stream(row)
                 .forEach(realBox -> realBox
                         .addIsPressedListener(p1.getIsPressedListener())));
 
 
-        CompletableFuture p1_turn = CompletableFuture.runAsync(p1.getWaitFillTheMove())
+        AtomicBoolean endTurn = new AtomicBoolean(false);
+
+        while(true) {
+            System.out.println("-------------START TURN---------------");
+
+            endTurn.set(false);
+
+            CompletableFuture
+                    .runAsync(p1.getWaitFillTheMove())
+                    .thenRun(p1.getMakeRealMove())
+                    .thenRun(cb::clearPressedDatas)
+                    .thenRun(p2.makeMoveRunnable)
+                    .thenRun(()->endTurn.set(true));
+               /* .thenRun(p1.getWaitFillTheMove())
                 .thenRun(p1.getMakeRealMove())
-                .thenRun(p2.makeMoveRunnable)
-                .thenRun(()->{
-                    try {
-                        Thread.sleep(10000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+                .thenRun(p2.makeMoveRunnable);*/
+
+            while(!endTurn.get()){
+                System.out.println(".....wait end turn.....");
+                Thread.sleep(1000);
+            }
+
+            System.out.println("-------------END TURN---------------");
+        }
+
+
+
 
         // cb.getBoard()[6][2].removePieceGUI();
 
-        f.setVisible(true);
+
     }
 
 

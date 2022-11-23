@@ -29,7 +29,7 @@ public class HumanPlayer extends Player {
     private IsPressedListener isPressedListener;
 
 
-    public HumanPlayer (Color color,RealBox[][] board,JFrame jFrame){
+    public HumanPlayer (Color color,RealBox[][] board){
         super(true,color);
         this.board = board;
         fillTheMove = false;
@@ -49,6 +49,9 @@ public class HumanPlayer extends Player {
 
         this.makeRealMove = () -> {
             nextMove.makeMove();
+            nextMove.setStart(null);
+            nextMove.setEnd(null);
+            fillTheMove = false;
         };
 
     }
@@ -58,6 +61,8 @@ public class HumanPlayer extends Player {
         if(starterRealBox.getCurrentPiece()==null) throw new Exception("The starter box must contain a piece!!");
         return starterRealBox.getCurrentPiece().getPossibleMoves(starterRealBox,board);
     }
+
+
 
 
     public static void main(String[] args) throws Exception {
@@ -88,7 +93,7 @@ public class HumanPlayer extends Player {
         cb.addBoxListeners();
 
 
-        HumanPlayer p1 = new HumanPlayer(Color.WHITE,cb.getBoard(),f);
+        HumanPlayer p1 = new HumanPlayer(Color.WHITE,cb.getBoard());
 
 
         Arrays.stream(cb.getBoard()).forEach(row -> Arrays.stream(row)

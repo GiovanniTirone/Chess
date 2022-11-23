@@ -59,7 +59,7 @@ public class RealBox extends JButton implements IBox {
 
     public void removePiece(){
        // if(this.currentPiece!=null){
-           // currentPiece.setJLabel(null);
+            this.currentPiece.setJLabel(null); //??????????
             this.currentPiece = null;
         //}
     }

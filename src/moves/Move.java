@@ -95,7 +95,7 @@ public abstract class Move<someBox extends IBox>{
         cb.addBoxListeners();
 
 
-       HumanPlayer p1 = new HumanPlayer(Color.WHITE,cb.getBoard(),f);
+       HumanPlayer p1 = new HumanPlayer(Color.WHITE,cb.getBoard());
 
 
         Arrays.stream(cb.getBoard()).forEach(row -> Arrays.stream(row)

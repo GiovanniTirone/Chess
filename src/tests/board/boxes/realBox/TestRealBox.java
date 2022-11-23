@@ -1,4 +1,4 @@
-package tests.board.boxes;
+package tests.board.boxes.realBox;
 
 import board.MyChessBoard;
 import board.boxes.RealBox;
