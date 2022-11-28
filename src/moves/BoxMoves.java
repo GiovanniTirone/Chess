@@ -5,8 +5,7 @@ import board.boxes.FakeBox;
 import java.util.ArrayList;
 
 @Data
-//public class BoxMoves <someMove extends Move> extends ArrayList <someMove> {
-public class BoxMoves extends ArrayList <FakeMove> {
+public class BoxMoves  extends ArrayList <FakeMove> {
 
     private IBox box;
 
