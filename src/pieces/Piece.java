@@ -11,6 +11,8 @@ import java.awt.*;
 public abstract class Piece {
     private Color color;
     private PieceName pieceName;
+
+    private int strength;
     private JLabel jLabel;
     private boolean live;
 
@@ -38,12 +40,14 @@ public abstract class Piece {
         possibleMoves[starter_row][starter_col].addMove(possible_row,possible_col);
     }*/
 
+    public void setStrength (boolean maximizingPlayer){
+        int k = maximizingPlayer ? 1 : -1;
+        this.strength = k*this.pieceName.getStrength();
+    }
+
 
     public abstract BoxMoves getPossibleMoves (IBox currentBox, IBox[][] board);
 
-    public int getStrength () {
-        return this.pieceName.getStrenght();
-    }
 
     public String printPossibleMoves (BoxMoves boxMoves) {
         String str = "";

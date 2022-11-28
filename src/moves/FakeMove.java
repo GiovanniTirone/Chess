@@ -1,7 +1,7 @@
 package moves;
 
 import board.boxes.FakeBox;
-import pieces.Piece;
+
 
 public class FakeMove extends Move<FakeBox> {
 

@@ -75,12 +75,13 @@ public class RealBox extends JButton implements IBox {
 
     public void removePieceGUI () {
         this.remove(this.currentPiece.getJLabel());
-        jFrame.setVisible(false);
+        //jFrame.setVisible(false);
     }
 
     public void addPieceGUI (){
        this.add(this.currentPiece.getJLabel());
-       jFrame.setVisible(true);
+       //jFrame.setVisible(true);
+        SwingUtilities.updateComponentTreeUI(jFrame);
     }
 
     public void addIsPressedListener (IsPressedListener isPressedListener) {

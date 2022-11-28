@@ -14,6 +14,7 @@ public class PlayerPieces extends HashMap <PieceName,ArrayList<Piece>> {
     public PlayerPieces (Color color){
         super();
         this.color=color;
+
         for(PieceName pieceName : PieceName.values()) {
             switch (pieceName) {
                 case PAWN:
@@ -50,7 +51,14 @@ public class PlayerPieces extends HashMap <PieceName,ArrayList<Piece>> {
                     break;
             }
         }
+        //set strength
 
+
+    }
+
+    public void setStrengths (boolean maximizingPlayer) {
+        this.values().stream()
+                .forEach(piecesList -> piecesList.stream().forEach(piece -> piece.setStrength(maximizingPlayer)));
     }
 
     /*

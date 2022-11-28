@@ -28,6 +28,7 @@ public class TestRealMove {
         });
     }
 
+    /*
     @BeforeEach
     public void activateJFrame () throws InterruptedException {
         jFrame.add(cb.getGui());
@@ -40,7 +41,7 @@ public class TestRealMove {
         jFrame.setMinimumSize(jFrame.getSize());
         jFrame.setVisible(true);
         Thread.sleep(2000);
-    }
+    }*/
 
 
     @Test
@@ -50,4 +51,13 @@ public class TestRealMove {
         realMove.makeMove();
     }
 
+    @Test
+    public void testUndo (){
+        board[0][0].addPiece(new Pawn(Color.BLACK));
+        RealMove realMove =  new RealMove(board[0][0],board[0][1],jFrame);
+        realMove.makeMove();
+        cb.printBoard();
+        realMove.undo();
+        cb.printBoard();
+    }
 }

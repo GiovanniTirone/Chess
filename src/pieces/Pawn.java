@@ -25,19 +25,26 @@ public class Pawn extends Piece{
         }else{
             if(i!=0) boxMoves.addMove(i-1,j,board);
         }
+        addKillingMoves(currentBox,board,boxMoves);
         return boxMoves;
     }
 
-    public BoxMoves getKillingMoves (IBox currentBox, IBox[][] board) {
-        BoxMoves boxMoves = new BoxMoves(currentBox);
+    public void addKillingMoves (IBox currentBox, IBox[][] board, BoxMoves boxMoves) {
         int k = this.getColor() == Color.BLACK ? 1 : -1 ;
         int i = currentBox.getRow();
         int j = currentBox.getCol();
         if(numberIsInBoard(i+k)){
-            if(numberIsInBoard(j+1)) boxMoves.addMove(i+k,j+1,board);
-            if(numberIsInBoard(j-1)) boxMoves.addMove(i+k,j-1,board);
+            if(numberIsInBoard(j+1)) {
+                Piece targetPiece = board[i+k][j+1].getCurrentPiece();
+                if(targetPiece !=null && targetPiece.getColor()!=getColor())
+                    boxMoves.addMove(i+k,j+1,board);
+            }
+            if(numberIsInBoard(j-1)) {
+                Piece targetPiece = board[i+k][j-1].getCurrentPiece();
+                if(targetPiece !=null && targetPiece.getColor()!=getColor())
+                    boxMoves.addMove(i+k,j-1,board);
+            }
         }
-        return boxMoves;
     }
 
     public static void main(String[] args) throws Exception {
@@ -59,15 +66,16 @@ public class Pawn extends Piece{
                         .printPossibleMoves(boxMoves));
             }
         }
+        /*
         for(int i=0; i<8; i++){
             for(int j=0; j<8; j++){
                 Pawn pawn = (Pawn)  whitePieces.getPiece(PieceName.PAWN,0);
-                BoxMoves boxMoves = pawn.getKillingMoves(cb.getBoard()[i][j],cb.getBoard());
+                BoxMoves boxMoves = pawn.getKillingMoves(cb.getBoard()[i][j],cb.getBoard(),new BoxMoves(cb.getBoard()[i][j]));
                 System.out.println("Moves of the box" + "(" +i +"," +j+"):" +
                         "\n" + whitePieces.getPiece(PieceName.PAWN,0)
                         .printPossibleMoves(boxMoves));
             }
-        }
+        }*/
     }
 
 }

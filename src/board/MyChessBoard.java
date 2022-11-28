@@ -4,6 +4,8 @@ import lombok.Data;
 import moves.BoxMoves;
 import pieces.Piece;
 import pieces.PieceName;
+import player.Player;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -125,6 +127,12 @@ public class MyChessBoard {
         addPieceToBoard(7,4,whitePieces.getPiece(PieceName.KING,0));
 
     }
+
+
+    public void printBoard () {
+        Arrays.stream(board).forEach(row -> Arrays.stream(row).forEach(box -> System.out.println(box)));
+    }
+
 
     public static void main(String[] args) throws Exception {
 

@@ -6,15 +6,11 @@ import board.boxes.RealBox;
 import moves.FakeMove;
 import moves.RealMove;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.MethodDescriptor;
 import org.testng.annotations.Test;
 import pieces.Pawn;
-import pieces.Piece;
 import player.AiPlayer;
-
 import javax.swing.*;
 import java.awt.*;
-import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 

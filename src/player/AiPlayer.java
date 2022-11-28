@@ -10,14 +10,13 @@ import moves.RealMove;
 import pieces.Piece;
 import javax.swing.*;
 import java.awt.Color;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class AiPlayer extends Player {
 
@@ -25,26 +24,37 @@ public class AiPlayer extends Player {
 
     private RealBox [][] board;
 
+    private int standardDepth;
+
     JFrame jFrame;
 
     public AiPlayer (Color color, RealBox [][] board,JFrame jFrame) {
         super(false, color);
         this.board = board;
         //this.jFrame = jFrame;
-        makeMoveRunnable = () -> makeMove(this.board);
+        this.makeMoveRunnable = ()->makeMove(board);
+        this.standardDepth = 1;
     }
 
+    public Runnable getMakeMoveWithDepthRunnable (int maxDepth) {
+        return ()->makeMoveWithDepth(board,maxDepth);
+    }
 
-    public boolean makeMove (RealBox[][] board) {  //Inserire alphaBeta anche qui???
+    public boolean makeMove (RealBox[][] board) {
+        return makeMoveWithDepth(board,standardDepth);
+    }
+
+    public boolean makeMoveWithDepth (RealBox[][] board,int maxDepth) {  //Inserire alphaBeta anche qui???
         System.out.println("-------------------Make AI move-----------------------");
         FakeBox[][] fakeBoard = createFakeBoardFromBoard(board);
-        System.out.println("fakeboard" + fakeBoard);
+        //System.err.println("fakeboard" + fakeBoard);
         List<FakeMove> possibleMoves = getPossibleMoves(fakeBoard);
+        System.err.println(possibleMoves);
         int bestValue = Integer.MIN_VALUE;
         FakeMove bestMove = null;
         for(FakeMove move : possibleMoves){
             move.makeMove();
-            int tempValue = alphaBeta(fakeBoard,0,true,Integer.MIN_VALUE,Integer.MAX_VALUE);
+            int tempValue = alphaBeta(fakeBoard,maxDepth,true,Integer.MIN_VALUE,Integer.MAX_VALUE);
             move.undo();
             if(tempValue>bestValue) {
                 bestValue = tempValue;
@@ -58,48 +68,36 @@ public class AiPlayer extends Player {
 
 
 
-    private int miniMax (FakeBox[][] board, int depth, boolean maximizingPlayer) {
-        if(depth == 3 ) return evaluateBoard(board); //aggiungere condizione di VITTORIA
-        if(maximizingPlayer){
-            int value = Integer.MIN_VALUE;
-            for(Move move : getPossibleMoves(board)){
-               // move.makeMove();
-                value = Math.max(value,miniMax(board,depth+1,false));
-               // move.undo(board);
-            }
-            return value;
-        }else{
-            int value = Integer.MAX_VALUE;
-            for(Move move : getPossibleMoves(board)){
-                move.makeMove();
-                value = Math.min(value,miniMax(board,depth+1,true));
-               // move.undo(board);
-            }
-            return value;
-        }
-    }
-
     private int alphaBeta ( FakeBox[][] board, int depth, boolean maximizingPlayer, int a , int b) {
         System.out.println("-----------------AlphaBeta at depth" + depth + "----------------");
-        if (depth == 3) return evaluateBoard(board); //aggiungere vittoria
+        if (depth == 0) {
+            int valutation = evaluateBoard(board); //aggiungere vittoria
+            for(int i=0; i<2; i++){
+                for(int j=0;j<2;j++){
+                    System.err.println(board[i][j]);
+                }
+            }
+            System.err.println("Valutation :  " + valutation);
+            return valutation;
+        }
         if (maximizingPlayer) {
             int value = Integer.MIN_VALUE;
-            for (Move move : getPossibleMoves(board)) {
+            for (FakeMove move : getPossibleMoves(board)) {
                 move.makeMove();
-                value = Math.max(value, alphaBeta(board, depth + 1, false, a, b));
+                value = Math.max(value, alphaBeta(board, depth - 1, false, a, b));
                 move.undo();
-                if (value >= b) break; // β cutoff
                 a = Math.max(a, value);
+                if (b <= a) break; // β cutoff
             }
             return value;
         } else {
             int value = Integer.MAX_VALUE;
-            for (Move move : getPossibleMoves(board)) {
+            for (FakeMove move : getPossibleMoves(board)) {
                 move.makeMove();
-                value = Math.min(value, alphaBeta(board, depth + 1, true, a, b));
+                value = Math.min(value, alphaBeta(board, depth - 1, true, a, b));
                 move.undo();
-                if (value <= a) break; // α cutoff
                 b = Math.min(b, value);
+                if (b <= a) break; // α cutoff
             }
             return value;
         }
@@ -142,7 +140,7 @@ public class AiPlayer extends Player {
         return realMove;
     }
 
-    private int evaluateBoard(FakeBox[][]board) {
+    public int evaluateBoard(FakeBox[][]board) {
         int result = 0;
         for(int i=0; i<8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -159,18 +157,45 @@ public class AiPlayer extends Player {
         for(int i=0; i<8; i++) {
             for (int j = 0; j < 8; j++) {
                 Piece currentPiece = board[i][j].getCurrentPiece();
-                if(currentPiece!=null) {
+                if(currentPiece!=null && currentPiece.getColor() == getColor()) {
                     //System.out.println("get moves of box: " + i +" , " + j );
-                    currentPiece.getPossibleMoves( board[i][j], board)
-                            .forEach(move-> possibleMoves.add((FakeMove) move));
+                    possibleMoves.addAll(currentPiece.getPossibleMoves(board[i][j], board));
                 }
             }
         }
-        System.out.println("Possible moves: " + possibleMoves);
+        //System.out.println("Possible moves: " + possibleMoves);
         return possibleMoves;
     }
 
+    private int miniMax (FakeBox[][] board, int depth, boolean maximizingPlayer) {
+        if(depth == 3 ) return evaluateBoard(board); //aggiungere condizione di VITTORIA
+        if(maximizingPlayer){
+            int value = Integer.MIN_VALUE;
+            for(Move move : getPossibleMoves(board)){
+                // move.makeMove();
+                value = Math.max(value,miniMax(board,depth+1,false));
+                // move.undo(board);
+            }
+            return value;
+        }else{
+            int value = Integer.MAX_VALUE;
+            for(Move move : getPossibleMoves(board)){
+                move.makeMove();
+                value = Math.min(value,miniMax(board,depth+1,true));
+                // move.undo(board);
+            }
+            return value;
+        }
+    }
+
     public static void main(String[] args) throws Exception {
+
+        System.setOut(new PrintStream(new OutputStream() {
+            public void write(int b) {
+                //DO NOTHING
+            }
+        }));
+
         JFrame f = new JFrame("ChessChamp");
         MyChessBoard cb = new MyChessBoard(f);
         f.add(cb.getGui());
@@ -184,6 +209,9 @@ public class AiPlayer extends Player {
 
         PlayerPieces blackPieces = new PlayerPieces(Color.BLACK);
         PlayerPieces whitePieces = new PlayerPieces(Color.WHITE);
+
+        blackPieces.setStrengths(true);
+        whitePieces.setStrengths(false);
 
         cb.addPiecesInStarterPosition(whitePieces,blackPieces);
 
@@ -207,6 +235,9 @@ public class AiPlayer extends Player {
 
         AtomicBoolean endTurn = new AtomicBoolean(false);
 
+
+
+
         while(true) {
             System.out.println("-------------START TURN---------------");
 
@@ -223,12 +254,13 @@ public class AiPlayer extends Player {
                 .thenRun(p2.makeMoveRunnable);*/
 
             while(!endTurn.get()){
-                System.out.println(".....wait end turn.....");
+                //System.out.println(".....wait end turn.....");
                 Thread.sleep(1000);
             }
 
             System.out.println("-------------END TURN---------------");
         }
+
 
 
 

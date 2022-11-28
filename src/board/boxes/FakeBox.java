@@ -29,4 +29,15 @@ public class FakeBox implements IBox {
             this.currentPiece = null;
         }
 
+
+    @Override
+    public String toString() {
+        return "Box (" + row  + ","  +col +")"  +
+                "\n currentPiece: " + currentPiece ;
+                //print possible moves , it needs a board.
+                //"\n pressListener: " + pressListener +
+
+    }
+
+
 }

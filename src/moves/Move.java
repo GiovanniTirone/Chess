@@ -2,10 +2,8 @@ package moves;
 import board.MyChessBoard;
 import board.PlayerPieces;
 import board.boxes.IBox;
-import board.boxes.RealBox;
 import lombok.Data;
 import pieces.Piece;
-import pieces.PieceName;
 import player.HumanPlayer;
 
 import javax.swing.*;
@@ -14,16 +12,19 @@ import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 
 @Data
-public abstract class Move<someBox extends IBox>{
+public abstract class Move<SomeBox extends IBox>{
 
-    private someBox start;
-    private someBox end;
+    private SomeBox start;
+    private SomeBox end;
+
+    private Piece eatenPiece;
 
     public Move () {}
 
-    public Move(someBox startingBox, someBox endingBox) {
+    public Move(SomeBox startingBox, SomeBox endingBox) {
         this.start = startingBox;
         this.end = endingBox;
+        this.eatenPiece = null;
     }
 
 
@@ -32,8 +33,9 @@ public abstract class Move<someBox extends IBox>{
         Piece endPiece = end.getCurrentPiece();
         if(endPiece != null){  //se voglio spostare la logica delle possible moves dai pieces alle moves devo metterla qui
             if(endPiece.getColor() != startPiece.getColor()){
-                if(endPiece.getPieceName() == PieceName.KING) return true;
-                endPiece.setLive(false);
+               // if(endPiece.getPieceName() == PieceName.KING) return true;
+                //endPiece.setLive(false);
+                eatenPiece = endPiece;
                 removePieceFromEnd();
             }
         }
@@ -60,6 +62,7 @@ public abstract class Move<someBox extends IBox>{
     public void undo () {
         addPieceToStart(end.getCurrentPiece());
         removePieceFromEnd();
+        addPieceToEnd(eatenPiece);
     }
 
 

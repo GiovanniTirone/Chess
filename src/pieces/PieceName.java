@@ -12,18 +12,20 @@ public enum PieceName {
 
     private final String unicodeChar;
 
-    private final int strenght;
+    private final int strength;
 
-    PieceName (String label, int strenght) {
+    PieceName (String label, int strength) {
         this.unicodeChar = label;
-        this.strenght = strenght;
+        this.strength = strength;
     }
 
     public String getUnicodeChar() {
         return this.unicodeChar;
     }
 
-    public int getStrenght() {
-        return strenght;
+    public int getStrength() {
+        return strength;
     }
+    
+
 }
