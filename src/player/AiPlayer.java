@@ -133,8 +133,8 @@ public class AiPlayer extends Player {
 
     public RealMove createRealMoveFromFakeMove (FakeMove fakeMove,RealBox[][] board){
         RealMove realMove = new RealMove();
-        realMove.setStart(findRealBoxFromFakeBox(fakeMove.getStart(),board));
-        realMove.setEnd(findRealBoxFromFakeBox(fakeMove.getEnd(),board));
+        realMove.setStart(findRealBoxFromFakeBox((FakeBox) fakeMove.getStart(),board));
+        realMove.setEnd(findRealBoxFromFakeBox((FakeBox) fakeMove.getEnd(),board));
         /*realMove.setStart(new RealBox(fakeMove.getStart().getRow(),fakeMove.getStart().getCol(),jFrame,fakeMove.getStart().getCurrentPiece()));
         realMove.setEnd(new RealBox(fakeMove.getEnd().getRow(),fakeMove.getEnd().getCol(),jFrame,fakeMove.getEnd().getCurrentPiece()));*/
         return realMove;
