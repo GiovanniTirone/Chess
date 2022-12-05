@@ -1,13 +1,10 @@
 package player;
-import board.MyChessBoard;
+import board.ChessBoard;
 import board.PlayerPieces;
 import board.boxes.RealBox;
 import lombok.Data;
 import moves.BoxMoves;
-import moves.MakeRealMoveRunnable;
-import moves.Move;
 import moves.RealMove;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
@@ -69,7 +66,7 @@ public class HumanPlayer extends Player {
 
 
         JFrame f = new JFrame("ChessChamp");
-        MyChessBoard cb = new MyChessBoard(f);
+        ChessBoard cb = new ChessBoard(f);
         f.add(cb.getGui());
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         f.setLocationByPlatform(true);

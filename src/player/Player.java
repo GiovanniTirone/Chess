@@ -1,11 +1,7 @@
 package player;
 
-import board.boxes.IBox;
-import board.boxes.RealBox;
 import lombok.Data;
-
 import java.awt.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 
 @Data

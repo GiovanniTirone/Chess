@@ -1,6 +1,6 @@
 package tests.player.aiPlayer;
 
-import board.MyChessBoard;
+import board.ChessBoard;
 import board.boxes.RealBox;
 import pieces.Pawn;
 import pieces.Piece;
@@ -14,7 +14,7 @@ public class TestAlphaBeta {
     public static void main(String[] args) throws InterruptedException {
 
         JFrame f = new JFrame("ChessChamp");
-        MyChessBoard cb = new MyChessBoard(f);
+        ChessBoard cb = new ChessBoard(f);
         RealBox[][] board = cb.getBoard();
         f.add(cb.getGui());
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -35,7 +35,7 @@ public class TestAlphaBeta {
         board[1][1].addPieceGUI();
         f.setVisible(true);
 
-        AiPlayer aiPlayer = new AiPlayer(Color.BLACK,board,f);
+        AiPlayer aiPlayer = new AiPlayer(Color.BLACK,board);
         Thread.sleep(2000);
         aiPlayer.makeMove(board);
     }

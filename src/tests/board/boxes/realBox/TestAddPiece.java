@@ -1,6 +1,6 @@
 package tests.board.boxes.realBox;
 
-import board.MyChessBoard;
+import board.ChessBoard;
 import board.boxes.RealBox;
 import pieces.Pawn;
 
@@ -12,7 +12,7 @@ public class TestAddPiece {
     public static void main(String[] args) {
 
         JFrame f = new JFrame("ChessChamp");
-        MyChessBoard cb = new MyChessBoard(f);
+        ChessBoard cb = new ChessBoard(f);
         RealBox [][] board = cb.getBoard();
         f.add(cb.getGui());
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

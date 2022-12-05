@@ -57,6 +57,10 @@ public abstract class Piece {
         return str;
     }
 
+    protected  boolean numberIsInBoard (int num) {
+        return num==-1 || num==8 ? false : true;
+    }
+
     @Override
     public String toString () {
         String colorStr = color == Color.BLACK ? "BLACK" : "WHITE";

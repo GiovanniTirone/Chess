@@ -1,14 +1,15 @@
 package pieces;
 
 import board.boxes.IBox;
-import board.boxes.RealBox;
-import board.MyChessBoard;
+import board.ChessBoard;
 import board.PlayerPieces;
 import moves.BoxMoves;
 
 import javax.swing.*;
 import java.awt.*;
-import static utility.Util.numberIsInBoard;
+
+
+
 
 public class Knight extends  Piece{
     public Knight (Color color){
@@ -67,7 +68,7 @@ public class Knight extends  Piece{
 
 
     public static void main(String[] args) throws Exception {
-        MyChessBoard cb = new MyChessBoard(new JFrame());
+        ChessBoard cb = new ChessBoard(new JFrame());
         PlayerPieces blackPieces = new PlayerPieces(Color.BLACK);
         PlayerPieces whitePieces = new PlayerPieces(Color.WHITE);
         //cb.addPiecesInStarterPosition(whitePieces,blackPieces);

@@ -1,6 +1,6 @@
 package tests.board.boxes.fakeBoard;
 
-import board.MyChessBoard;
+import board.ChessBoard;
 import board.boxes.FakeBox;
 import board.boxes.RealBox;
 import moves.FakeMove;
@@ -16,7 +16,7 @@ public class TestFakeBoard {
 
     public static void main(String[] args) {
         JFrame jFrame = new JFrame();
-        MyChessBoard cb = new MyChessBoard(jFrame);
+        ChessBoard cb = new ChessBoard(jFrame);
 
         RealBox [][] board =   cb.getBoard();
         Piece piece1 = new Pawn(Color.WHITE);
@@ -27,7 +27,7 @@ public class TestFakeBoard {
         board[0][0].addPiece(piece2);
         //cb.printBoard();
 
-        AiPlayer player = new AiPlayer(Color.BLACK,board,jFrame);
+        AiPlayer player = new AiPlayer(Color.BLACK,board);
 
         FakeBox [][] fakeBoard = player.createFakeBoardFromBoard(board);
         System.out.println("-------------FAKE BOARD BEFORE MOVING---------------");

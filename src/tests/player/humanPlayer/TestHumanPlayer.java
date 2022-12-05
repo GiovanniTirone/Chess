@@ -1,11 +1,10 @@
 package tests.player.humanPlayer;
 
-import board.MyChessBoard;
+import board.ChessBoard;
 import board.boxes.RealBox;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import pieces.Pawn;
-import player.AiPlayer;
 import player.HumanPlayer;
 
 import javax.swing.*;
@@ -17,7 +16,7 @@ public class TestHumanPlayer {
 
     JFrame jFrame = new JFrame();
 
-    private MyChessBoard cb = new MyChessBoard(jFrame);
+    private ChessBoard cb = new ChessBoard(jFrame);
 
     private RealBox[][] board = cb.getBoard();
 

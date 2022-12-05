@@ -1,14 +1,11 @@
 package board.boxes;
-import Sources.PieceGUI;
+import gui.PieceGUI;
 import lombok.Data;
 import pieces.Piece;
 import player.IsPressedListener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.beans.BeanProperty;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 

@@ -4,8 +4,6 @@ import lombok.Data;
 import moves.BoxMoves;
 import pieces.Piece;
 import pieces.PieceName;
-import player.Player;
-
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -14,7 +12,7 @@ import java.util.Arrays;
 
 
 @Data
-public class MyChessBoard {
+public class ChessBoard {
 
     public static RealBox currentPressedRealBox = null;
     public static BoxMoves currentPossibleMoves = null;
@@ -26,7 +24,7 @@ public class MyChessBoard {
 
     private static final String COLS = "ABCDEFGH";
 
-    public MyChessBoard(JFrame jFrame)  {
+    public ChessBoard(JFrame jFrame)  {
         this.jFrame = jFrame;
         this.board = new RealBox[8][8];
         this.boardPanel = new JPanel(new GridLayout(0, 9));
@@ -137,7 +135,7 @@ public class MyChessBoard {
     public static void main(String[] args) throws Exception {
 
         JFrame f = new JFrame("ChessChamp");
-        MyChessBoard cb = new MyChessBoard(f);
+        ChessBoard cb = new ChessBoard(f);
         f.add(cb.gui);
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         f.setLocationByPlatform(true);

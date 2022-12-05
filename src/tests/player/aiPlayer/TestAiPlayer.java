@@ -1,6 +1,6 @@
 package tests.player.aiPlayer;
 
-import board.MyChessBoard;
+import board.ChessBoard;
 import board.boxes.FakeBox;
 import board.boxes.RealBox;
 import moves.FakeMove;
@@ -17,11 +17,11 @@ import java.util.List;
 public class TestAiPlayer {
     JFrame jFrame = new JFrame();
 
-    private MyChessBoard cb = new MyChessBoard(jFrame);
+    private ChessBoard cb = new ChessBoard(jFrame);
 
     private RealBox [][] board = cb.getBoard();
 
-    private AiPlayer aiPlayer = new AiPlayer (Color.BLACK,  board,  jFrame);
+    private AiPlayer aiPlayer = new AiPlayer (Color.BLACK,  board);
 
     @AfterEach
     public void clearBoard( ) {

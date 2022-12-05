@@ -1,6 +1,6 @@
 package player;
 
-import board.MyChessBoard;
+import board.ChessBoard;
 import board.PlayerPieces;
 import board.boxes.FakeBox;;
 import board.boxes.RealBox;
@@ -26,12 +26,11 @@ public class AiPlayer extends Player {
 
     private int standardDepth;
 
-    JFrame jFrame;
 
-    public AiPlayer (Color color, RealBox [][] board,JFrame jFrame) {
+
+    public AiPlayer (Color color, RealBox [][] board) {
         super(false, color);
         this.board = board;
-        //this.jFrame = jFrame;
         this.makeMoveRunnable = ()->makeMove(board);
         this.standardDepth = 2;
     }
@@ -197,7 +196,7 @@ public class AiPlayer extends Player {
         }));
 
         JFrame f = new JFrame("ChessChamp");
-        MyChessBoard cb = new MyChessBoard(f);
+        ChessBoard cb = new ChessBoard(f);
         f.add(cb.getGui());
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         f.setLocationByPlatform(true);
@@ -225,7 +224,7 @@ public class AiPlayer extends Player {
 
 
         HumanPlayer p1 = new HumanPlayer(Color.WHITE,cb.getBoard());
-        AiPlayer p2 = new AiPlayer(Color.BLACK,cb.getBoard(),f);
+        AiPlayer p2 = new AiPlayer(Color.BLACK,cb.getBoard());
         f.setVisible(true);
 
         Arrays.stream(cb.getBoard()).forEach(row -> Arrays.stream(row)

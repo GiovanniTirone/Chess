@@ -1,9 +1,8 @@
 package tests.board.boxes.realBox;
 
-import board.MyChessBoard;
+import board.ChessBoard;
 import board.boxes.RealBox;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pieces.Pawn;
 
@@ -15,7 +14,7 @@ public class TestRealBox {
 
     JFrame jFrame = new JFrame();
 
-    private MyChessBoard cb = new MyChessBoard(jFrame);
+    private ChessBoard cb = new ChessBoard(jFrame);
 
     private RealBox[][] board = cb.getBoard();
 

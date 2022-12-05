@@ -1,6 +1,6 @@
 package tests.pieces;
 
-import board.MyChessBoard;
+import board.ChessBoard;
 import board.boxes.RealBox;
 import moves.BoxMoves;
 import org.testng.annotations.Test;
@@ -14,11 +14,11 @@ public class TestPawn {
 
     JFrame jFrame = new JFrame();
 
-    private MyChessBoard cb = new MyChessBoard(jFrame);
+    private ChessBoard cb = new ChessBoard(jFrame);
 
     private RealBox[][] board = cb.getBoard();
 
-    private AiPlayer aiPlayer = new AiPlayer (Color.BLACK,  board,  jFrame);
+    private AiPlayer aiPlayer = new AiPlayer (Color.BLACK,  board);
 
 
     @Test

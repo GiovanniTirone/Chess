@@ -1,5 +1,5 @@
 package board.boxes;
-import board.MyChessBoard;
+import board.ChessBoard;
 import board.PlayerPieces;
 import lombok.Data;
 import player.HumanPlayer;
@@ -31,18 +31,18 @@ public class BoxListener implements MouseListener {
         System.out.println("---------Press the first box-------------");
         realBox.setFirstPressed(true);  // FIRST false -> true
         realBox.getPropertyChangeSupport().firePropertyChange("firstPressed",false,true); //FIRE PROPERTY
-        MyChessBoard.currentPressedRealBox = realBox;
-        MyChessBoard.currentPossibleMoves = realBox.getCurrentPiece().getPossibleMoves(realBox,board);
-        System.out.println("cb.cb: " + MyChessBoard.currentPressedRealBox);
-        System.out.println("Box moves: " + MyChessBoard.currentPossibleMoves);
+        ChessBoard.currentPressedRealBox = realBox;
+        ChessBoard.currentPossibleMoves = realBox.getCurrentPiece().getPossibleMoves(realBox,board);
+        System.out.println("cb.cb: " + ChessBoard.currentPressedRealBox);
+        System.out.println("Box moves: " + ChessBoard.currentPossibleMoves);
         System.out.println("-----------------------------------------");
     }
 
     private void pressAgainFirstBox () {
         System.out.println("---------------Press again the same box-----------------");
         realBox.setFirstPressed(false); // FIRST true -> false
-        MyChessBoard.currentPressedRealBox = null;
-        MyChessBoard.currentPossibleMoves = null;
+        ChessBoard.currentPressedRealBox = null;
+        ChessBoard.currentPossibleMoves = null;
         System.out.println("----------------------------------------");
     }
 
@@ -72,13 +72,13 @@ public class BoxListener implements MouseListener {
     public void mousePressed(MouseEvent e) {
         System.out.println("You press the box " + realBox.getRow() + " , " + realBox.getCol());
         //attenzione: devo essere sicuro che le condizioni justPressedAnotherBox e box.isPressed NON si verifichino contemporaneamente
-        if (MyChessBoard.currentPressedRealBox == null) {
+        if (ChessBoard.currentPressedRealBox == null) {
             if (realBox.getCurrentPiece() != null) pressFirstBox();
         }else {
             if (realBox.isFirstPressed()) pressAgainFirstBox();
-            else if (MyChessBoard.currentPossibleMoves.containsEndingMove(realBox.getRow(), realBox.getCol())){
+            else if (ChessBoard.currentPossibleMoves.containsEndingMove(realBox.getRow(), realBox.getCol())){
                 if (realBox.getCurrentPiece() != null) {
-                    if (realBox.getCurrentPiece().getColor() == MyChessBoard.currentPressedRealBox.getCurrentPiece().getColor())
+                    if (realBox.getCurrentPiece().getColor() == ChessBoard.currentPressedRealBox.getCurrentPiece().getColor())
                         pressSecondFullBoxWithSamePieceColor();
                     else
                         pressSecondFullBoxWithDifferentPieceColor();
@@ -112,7 +112,7 @@ public class BoxListener implements MouseListener {
 
 
         JFrame f = new JFrame("ChessChamp");
-        MyChessBoard cb = new MyChessBoard(f);
+        ChessBoard cb = new ChessBoard(f);
         f.add(cb.getGui());
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         f.setLocationByPlatform(true);

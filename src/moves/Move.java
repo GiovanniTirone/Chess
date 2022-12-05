@@ -1,5 +1,5 @@
 package moves;
-import board.MyChessBoard;
+import board.ChessBoard;
 import board.PlayerPieces;
 import board.boxes.IBox;
 import lombok.Data;
@@ -74,7 +74,7 @@ public abstract class Move<SomeBox extends IBox>{
     public static void main(String[] args) throws Exception {
 
         JFrame f = new JFrame("ChessChamp");
-        MyChessBoard cb = new MyChessBoard(f);
+        ChessBoard cb = new ChessBoard(f);
         f.add(cb.getGui());
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         f.setLocationByPlatform(true);

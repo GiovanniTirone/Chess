@@ -1,6 +1,6 @@
 package tests.player.aiPlayer;
 
-import board.MyChessBoard;
+import board.ChessBoard;
 import board.boxes.FakeBox;
 import board.boxes.RealBox;
 import moves.FakeMove;
@@ -17,7 +17,7 @@ public class TestAlphaBetaManually {
     public static void main(String[] args) throws InterruptedException {
 
         JFrame f = new JFrame("ChessChamp");
-        MyChessBoard cb = new MyChessBoard(f);
+        ChessBoard cb = new ChessBoard(f);
         RealBox[][] board = cb.getBoard();
         f.add(cb.getGui());
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -37,7 +37,7 @@ public class TestAlphaBetaManually {
         board[1][1].addPieceGUI();
         f.setVisible(true);
 
-        AiPlayer aiPlayer = new AiPlayer(Color.BLACK,board,f);
+        AiPlayer aiPlayer = new AiPlayer(Color.BLACK,board);
         FakeBox [][] fakeBoard = aiPlayer.createFakeBoardFromBoard(board);
 
         List<FakeMove>  possibleMoves = aiPlayer.getPossibleMoves(fakeBoard);

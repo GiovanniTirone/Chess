@@ -1,6 +1,6 @@
 package tests.player.aiPlayer;
 
-import board.MyChessBoard;
+import board.ChessBoard;
 import board.boxes.RealBox;
 import pieces.Pawn;
 import player.AiPlayer;
@@ -13,7 +13,7 @@ public class TestMakeMove {
     public static void main(String[] args) {
 
         JFrame f = new JFrame("ChessChamp");
-        MyChessBoard cb = new MyChessBoard(f);
+        ChessBoard cb = new ChessBoard(f);
         RealBox[][] board = cb.getBoard();
         f.add(cb.getGui());
         f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -28,7 +28,7 @@ public class TestMakeMove {
         board[0][0].getCurrentPiece().printAllDetails();
         f.setVisible(true);
 
-        AiPlayer aiPlayer = new AiPlayer(Color.BLACK,board,f);
+        AiPlayer aiPlayer = new AiPlayer(Color.BLACK,board);
         aiPlayer.makeMove(board);
     }
 
