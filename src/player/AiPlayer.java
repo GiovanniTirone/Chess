@@ -33,7 +33,7 @@ public class AiPlayer extends Player {
         this.board = board;
         //this.jFrame = jFrame;
         this.makeMoveRunnable = ()->makeMove(board);
-        this.standardDepth = 1;
+        this.standardDepth = 2;
     }
 
     public Runnable getMakeMoveWithDepthRunnable (int maxDepth) {
@@ -49,7 +49,7 @@ public class AiPlayer extends Player {
         FakeBox[][] fakeBoard = createFakeBoardFromBoard(board);
         //System.err.println("fakeboard" + fakeBoard);
         List<FakeMove> possibleMoves = getPossibleMoves(fakeBoard);
-        System.err.println(possibleMoves);
+       // System.err.println(possibleMoves);
         int bestValue = Integer.MIN_VALUE;
         FakeMove bestMove = null;
         for(FakeMove move : possibleMoves){
@@ -72,12 +72,12 @@ public class AiPlayer extends Player {
         System.out.println("-----------------AlphaBeta at depth" + depth + "----------------");
         if (depth == 0) {
             int valutation = evaluateBoard(board); //aggiungere vittoria
-            for(int i=0; i<2; i++){
+            /*for(int i=0; i<2; i++){
                 for(int j=0;j<2;j++){
                     System.err.println(board[i][j]);
                 }
             }
-            System.err.println("Valutation :  " + valutation);
+            System.err.println("Valutation :  " + valutation);*/
             return valutation;
         }
         if (maximizingPlayer) {
@@ -152,7 +152,7 @@ public class AiPlayer extends Player {
     }
 
     public List<FakeMove> getPossibleMoves (FakeBox[][] board){
-        System.out.println("------------getPossibleMoves from all the board --------------");
+       // System.out.println("------------getPossibleMoves from all the board --------------");
         List<FakeMove> possibleMoves = new ArrayList<>();
         for(int i=0; i<8; i++) {
             for (int j = 0; j < 8; j++) {
