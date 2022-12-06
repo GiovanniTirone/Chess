@@ -1,0 +1,3 @@
+# Chess
+A simple chess game, with some  simplified rules <br />
+Still testing...
