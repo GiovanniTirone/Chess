@@ -37,7 +37,7 @@ public class TestAlphaBeta {
 
         AiPlayer aiPlayer = new AiPlayer(Color.BLACK,board);
         Thread.sleep(2000);
-        aiPlayer.makeMove(board);
+        aiPlayer.makeMove();
     }
 
 

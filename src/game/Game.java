@@ -46,7 +46,7 @@ public class Game  {
 
             System.out.println(winner.name() +  " has win the game!!!");
         };
-        p2.setStandardDepth(5);
+        p2.setStandardDepth(2);
     }
 
 

@@ -29,7 +29,7 @@ public class TestMakeMove {
         f.setVisible(true);
 
         AiPlayer aiPlayer = new AiPlayer(Color.BLACK,board);
-        aiPlayer.makeMove(board);
+        aiPlayer.makeMove();
     }
 
 
