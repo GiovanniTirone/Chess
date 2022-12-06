@@ -14,7 +14,6 @@ public class IsPressedListener implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println("I AM LISTENING the event: " + evt);
         if(evt.getPropertyName().equals("firstPressed")){
             humanPlayer.getNextMove().setStart((RealBox)evt.getSource());
         }

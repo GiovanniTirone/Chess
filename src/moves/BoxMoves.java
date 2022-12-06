@@ -1,7 +1,6 @@
 package moves;
 import board.boxes.IBox;
 import lombok.Data;
-import board.boxes.FakeBox;
 import java.util.ArrayList;
 
 @Data
@@ -17,10 +16,8 @@ public class BoxMoves  extends ArrayList <FakeMove> {
     public void addMove(int row, int col, IBox[][] board){
         if(box.getCurrentPiece()!=null&&board[row][col].getCurrentPiece()!=null)
         if(box.getCurrentPiece().getColor() == board[row][col].getCurrentPiece().getColor()) return;
-        //this.add(new FakeMove(new FakeBox(box.getRow(),box.getCol(),box.getCurrentPiece()) ,new FakeBox(row,col,board[row][col].getCurrentPiece())));
         this.add( new FakeMove( board[box.getRow()][box.getCol()],  board[row][col]));
     }
-
 
 
     public void removeMove(int row, int col){

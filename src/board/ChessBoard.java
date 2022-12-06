@@ -126,46 +126,10 @@ public class ChessBoard {
 
     }
 
-
     public void printBoard () {
         Arrays.stream(board).forEach(row -> Arrays.stream(row).forEach(box -> System.out.println(box)));
     }
 
 
-    public static void main(String[] args) throws Exception {
-
-        JFrame f = new JFrame("ChessChamp");
-        ChessBoard cb = new ChessBoard(f);
-        f.add(cb.gui);
-        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        f.setLocationByPlatform(true);
-        // ensures the frame is the minimum size it needs to be
-        // in order display the components within it
-        f.pack();
-        // ensures the minimum size is enforced.
-        f.setMinimumSize(f.getSize());
-
-        PlayerPieces blackPieces = new PlayerPieces(Color.BLACK);
-        PlayerPieces whitePieces = new PlayerPieces(Color.WHITE);
-
-        cb.addPiecesInStarterPosition(whitePieces,blackPieces);
-
-
-        //IMPORTANTE: settare jFrame e board nei box listeners
-        //Arrays.stream(cb.board).forEach(row -> Arrays.stream(row).forEach(box -> box.getPressListener().setJFrame(f)));
-        Arrays.stream(cb.board).forEach(row -> Arrays.stream(row).forEach(box -> box.getPressListener().setBoard(cb.board)));
-
-        cb.addBoxListeners();
-
-        f.setVisible(true);
-
-       //PieceGUI.addColoredUnicodeCharToContainer(PieceName.KING.getUnicodeChar(), cb.board[0][0],
-                //     Color.DARK_GRAY,Color.BLACK,false);
-
-        //PieceGUI.addColoredUnicodeCharToContainer("\u2655", board[0][0], Color.BLACK, Color.DARK_GRAY, false);
-
-        //board[0][0].removePieceGUI();
-
-    }
 
 }

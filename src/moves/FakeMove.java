@@ -1,6 +1,5 @@
 package moves;
 
-import board.boxes.FakeBox;
 import board.boxes.IBox;
 
 

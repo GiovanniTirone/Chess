@@ -22,8 +22,6 @@ public class AiPlayer extends Player {
 
     private final TypePlayer type = TypePlayer.AI;
 
-    private Runnable makeMoveRunnable;
-
     private RealBox [][] board;
 
     private int standardDepth;
@@ -33,21 +31,14 @@ public class AiPlayer extends Player {
     public AiPlayer (Color color, RealBox [][] board) {
         super(false, color);
         this.board = board;
-        this.makeMoveRunnable = ()->makeMove(board);
         this.standardDepth = 2;
     }
 
-    public Runnable getMakeMoveWithDepthRunnable (int maxDepth) {
-        return ()->makeMoveWithDepth(board,maxDepth);
-    }
 
     public boolean makeMove () {
         return makeMoveWithDepth(board,standardDepth);
     }
 
-    public boolean makeMove (RealBox[][] board) {
-        return makeMoveWithDepth(board,standardDepth);
-    }
 
     public boolean makeMoveWithDepth (RealBox[][] board,int maxDepth) {  //Inserire alphaBeta anche qui???
         System.out.println("-------------------Make AI move-----------------------");
@@ -74,15 +65,8 @@ public class AiPlayer extends Player {
 
 
     private int alphaBeta ( FakeBox[][] board, int depth, boolean maximizingPlayer, int a , int b, boolean winning, boolean losing) {
-        System.out.println("-----------------AlphaBeta at depth" + depth + "----------------");
         if (depth == 0 || winning || losing) {
-            int valutation = evaluateBoard(board); //aggiungere vittoria
-            /*for(int i=0; i<2; i++){
-                for(int j=0;j<2;j++){
-                    System.err.println(board[i][j]);
-                }
-            }
-            System.err.println("Valutation :  " + valutation);*/
+            int valutation = evaluateBoard(board);
             return valutation;
         }
         if (maximizingPlayer) {
@@ -140,8 +124,6 @@ public class AiPlayer extends Player {
         RealMove realMove = new RealMove();
         realMove.setStart(findRealBoxFromFakeBox((FakeBox) fakeMove.getStart(),board));
         realMove.setEnd(findRealBoxFromFakeBox((FakeBox) fakeMove.getEnd(),board));
-        /*realMove.setStart(new RealBox(fakeMove.getStart().getRow(),fakeMove.getStart().getCol(),jFrame,fakeMove.getStart().getCurrentPiece()));
-        realMove.setEnd(new RealBox(fakeMove.getEnd().getRow(),fakeMove.getEnd().getCol(),jFrame,fakeMove.getEnd().getCurrentPiece()));*/
         return realMove;
     }
 
@@ -157,129 +139,17 @@ public class AiPlayer extends Player {
     }
 
     public List<FakeMove> getPossibleMoves (FakeBox[][] board){
-       // System.out.println("------------getPossibleMoves from all the board --------------");
         List<FakeMove> possibleMoves = new ArrayList<>();
         for(int i=0; i<8; i++) {
             for (int j = 0; j < 8; j++) {
                 Piece currentPiece = board[i][j].getCurrentPiece();
                 if(currentPiece!=null && currentPiece.getColor() == getColor()) {
-                    //System.out.println("get moves of box: " + i +" , " + j );
                     possibleMoves.addAll(currentPiece.getPossibleMoves(board[i][j], board));
                 }
             }
         }
-        //System.out.println("Possible moves: " + possibleMoves);
         return possibleMoves;
     }
-
-    private int miniMax (FakeBox[][] board, int depth, boolean maximizingPlayer) {
-        if(depth == 3 ) return evaluateBoard(board); //aggiungere condizione di VITTORIA
-        if(maximizingPlayer){
-            int value = Integer.MIN_VALUE;
-            for(Move move : getPossibleMoves(board)){
-                // move.makeMove();
-                value = Math.max(value,miniMax(board,depth+1,false));
-                // move.undo(board);
-            }
-            return value;
-        }else{
-            int value = Integer.MAX_VALUE;
-            for(Move move : getPossibleMoves(board)){
-                move.makeMove();
-                value = Math.min(value,miniMax(board,depth+1,true));
-                // move.undo(board);
-            }
-            return value;
-        }
-    }
-
-    public static void main(String[] args) throws Exception {
-
-        /* System.setOut(new PrintStream(new OutputStream() {
-            public void write(int b) {
-                //DO NOTHING
-            }
-        }));*/
-
-        JFrame f = new JFrame("ChessChamp");
-        ChessBoard cb = new ChessBoard(f);
-        f.add(cb.getGui());
-        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        f.setLocationByPlatform(true);
-        // ensures the frame is the minimum size it needs to be
-        // in order display the components within it
-        f.pack();
-        // ensures the minimum size is enforced.
-        f.setMinimumSize(f.getSize());
-
-        PlayerPieces blackPieces = new PlayerPieces(Color.BLACK);
-        PlayerPieces whitePieces = new PlayerPieces(Color.WHITE);
-
-        blackPieces.setStrengths(true);
-        whitePieces.setStrengths(false);
-
-        cb.addPiecesInStarterPosition(whitePieces,blackPieces);
-
-
-
-        //IMPORTANTE: settare jFrame e board nei box listeners
-        // Arrays.stream(cb.getBoard()).forEach(row -> Arrays.stream(row).forEach(box -> box.getPressListener().setJFrame(f)));
-        Arrays.stream(cb.getBoard()).forEach(row -> Arrays.stream(row).forEach(box -> box.getPressListener().setBoard(cb.getBoard())));
-
-        cb.addBoxListeners();
-
-
-        HumanPlayer p1 = new HumanPlayer(Color.WHITE,cb.getBoard());
-        AiPlayer p2 = new AiPlayer(Color.BLACK,cb.getBoard());
-        f.setVisible(true);
-
-        Arrays.stream(cb.getBoard()).forEach(row -> Arrays.stream(row)
-                .forEach(realBox -> realBox
-                        .addIsPressedListener(p1.getIsPressedListener())));
-
-
-        AtomicBoolean endTurn = new AtomicBoolean(false);
-
-        CompletableFuture turn = new CompletableFuture();
-
-
-        while(true) {
-            System.out.println("-------------START TURN---------------");
-
-            endTurn.set(false);
-
-            turn.thenRun(p1.getWaitFillTheMove())
-                    .thenRun(p1.getMakeRealMove())
-                    .thenRun(cb::clearPressedDatas)
-                    .thenRun(p2.makeMoveRunnable);
-            /*
-            CompletableFuture
-                    .runAsync(p1.getWaitFillTheMove())
-                    .thenRun(p1.getMakeRealMove())
-                    .thenRun(cb::clearPressedDatas)
-                    .thenRun(p2.makeMoveRunnable)
-                    .thenRun(()->endTurn.set(true));
-               /* .thenRun(p1.getWaitFillTheMove())
-                .thenRun(p1.getMakeRealMove())
-                .thenRun(p2.makeMoveRunnable);*/
-            /*
-            while(!endTurn.get()){
-                //System.out.println(".....wait end turn.....");
-                Thread.sleep(1000);
-            }*/
-
-            System.out.println("-------------END TURN---------------");
-        }
-
-
-
-
-
-        // cb.getBoard()[6][2].removePieceGUI();
-
-
-    }
-
 
 
 

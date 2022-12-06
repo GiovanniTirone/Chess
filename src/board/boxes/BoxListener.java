@@ -1,20 +1,11 @@
 package board.boxes;
 import board.ChessBoard;
-import board.PlayerPieces;
 import lombok.Data;
-import player.HumanPlayer;
-
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Arrays;
-import java.util.concurrent.CompletableFuture;
 
 @Data
 public class BoxListener implements MouseListener {
-
-    //JFrame jFrame;
 
     private RealBox realBox;
 
@@ -23,7 +14,6 @@ public class BoxListener implements MouseListener {
 
     public BoxListener(RealBox realBox, RealBox[][]board){
         this.realBox = realBox;
-        //this.jFrame = jFrame;
         this.board = board;
     }
 
@@ -71,7 +61,6 @@ public class BoxListener implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         System.out.println("You press the box " + realBox.getRow() + " , " + realBox.getCol());
-        //attenzione: devo essere sicuro che le condizioni justPressedAnotherBox e box.isPressed NON si verifichino contemporaneamente
         if (ChessBoard.currentPressedRealBox == null) {
             if (realBox.getCurrentPiece() != null) pressFirstBox();
         }else {
@@ -108,48 +97,4 @@ public class BoxListener implements MouseListener {
 
     }
 
-    public static void main(String[] args) throws Exception {
-
-
-        JFrame f = new JFrame("ChessChamp");
-        ChessBoard cb = new ChessBoard(f);
-        f.add(cb.getGui());
-        f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        f.setLocationByPlatform(true);
-        // ensures the frame is the minimum size it needs to be
-        // in order display the components within it
-        f.pack();
-        // ensures the minimum size is enforced.
-        f.setMinimumSize(f.getSize());
-
-        PlayerPieces blackPieces = new PlayerPieces(Color.BLACK);
-        PlayerPieces whitePieces = new PlayerPieces(Color.WHITE);
-
-        cb.addPiecesInStarterPosition(whitePieces,blackPieces);
-
-
-
-        //IMPORTANTE: settare jFrame e board nei box listeners
-       // Arrays.stream(cb.getBoard()).forEach(row -> Arrays.stream(row).forEach(box -> box.getPressListener().setJFrame(f)));
-        Arrays.stream(cb.getBoard()).forEach(row -> Arrays.stream(row).forEach(box -> box.getPressListener().setBoard(cb.getBoard())));
-
-        cb.addBoxListeners();
-
-
-        HumanPlayer p1 = new HumanPlayer(Color.WHITE,cb.getBoard());
-
-
-        Arrays.stream(cb.getBoard()).forEach(row -> Arrays.stream(row)
-                .forEach(realBox -> realBox
-                        .addIsPressedListener(p1.getIsPressedListener())));
-
-
-        CompletableFuture p1_turn = new CompletableFuture<>();
-
-/*
-        p1_turn.thenRunAsync(p1.AddChangePressedListenersUntilFillTheMove)
-                        .thenApply(p1.makeRealMove);
-*/
-        f.setVisible(true);
-    }
 }

@@ -15,11 +15,6 @@ public class FakeBox implements IBox {
         this.col = y;
     }
 
-    public FakeBox (int x, int y,Piece currentPiece){
-        this.row = x;
-        this.col = y;
-        this.currentPiece = currentPiece;
-    }
 
     public void addPiece(Piece piece) {
         this.currentPiece = piece;

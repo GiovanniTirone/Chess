@@ -1,8 +1,7 @@
 package moves;
-import board.boxes.IBox;
+
 import board.boxes.RealBox;
 import pieces.Piece;
-import pieces.PieceName;
 import javax.swing.*;
 
 public class RealMove extends Move<RealBox> {

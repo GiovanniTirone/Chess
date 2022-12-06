@@ -2,7 +2,7 @@ package player;
 
 import lombok.Data;
 import java.awt.*;
-import java.util.function.Supplier;
+
 
 @Data
 public abstract class Player {

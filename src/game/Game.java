@@ -3,15 +3,9 @@ import board.ChessBoard;
 import board.PlayerPieces;
 import player.AiPlayer;
 import player.HumanPlayer;
-import player.Player;
-import player.TypePlayer;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class Game  {
@@ -85,7 +79,6 @@ public class Game  {
         Thread game = new Thread(turn);
         game.start();
     }
-
 
 
 

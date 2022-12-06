@@ -51,7 +51,6 @@ public class PlayerPieces extends HashMap <PieceName,ArrayList<Piece>> {
                     break;
             }
         }
-        //set strength
 
 
     }
@@ -61,21 +60,11 @@ public class PlayerPieces extends HashMap <PieceName,ArrayList<Piece>> {
                 .forEach(piecesList -> piecesList.stream().forEach(piece -> piece.setStrength(maximizingPlayer)));
     }
 
-    /*
-    public Piece getPiece (PieceName pieceName) throws Exception {
-        if(pieceName != PieceName.KING || pieceName != PieceName.QUEEN) throw new Exception("This method works only for KIKG and QUEEN");
-        return this.get(pieceName).get(0);
-    };*/
 
     public Piece getPiece(PieceName pieceName, int number){
         return this.get(pieceName).get(number);
     }
 
-    /*
-    public JLabel getPieceJLabel (PieceName pieceName) throws Exception {
-        if(pieceName != PieceName.KING || pieceName != PieceName.QUEEN) throw new Exception("This method works only for KIKG and QUEEN");
-        return this.get(pieceName).get(0).getJLabel();
-    };*/
 
     public JLabel getPieceJLabel (PieceName pieceName, int number){
         return this.get(pieceName).get(number).getJLabel();

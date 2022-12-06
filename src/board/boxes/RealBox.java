@@ -3,7 +3,6 @@ import gui.PieceGUI;
 import lombok.Data;
 import pieces.Piece;
 import player.IsPressedListener;
-
 import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeSupport;
@@ -51,14 +50,11 @@ public class RealBox extends JButton implements IBox {
         this.currentPiece = piece;
         currentPiece.setJLabel(
                 PieceGUI.getJLabelFromUnicodeChar(piece.getUnicodeChar(),piece.getColor(), Color.DARK_GRAY, isBlack));
-        //this.add(this.currentPiece.getJLabel());
     }
 
     public void removePiece(){
-       // if(this.currentPiece!=null){
-            this.currentPiece.setJLabel(null); //??????????
+            this.currentPiece.setJLabel(null);
             this.currentPiece = null;
-        //}
     }
 
     public void activateClickListener () {
@@ -77,7 +73,6 @@ public class RealBox extends JButton implements IBox {
 
     public void addPieceGUI (){
        this.add(this.currentPiece.getJLabel());
-       //jFrame.setVisible(true);
         SwingUtilities.updateComponentTreeUI(jFrame);
     }
 
@@ -85,16 +80,11 @@ public class RealBox extends JButton implements IBox {
         propertyChangeSupport.addPropertyChangeListener(isPressedListener);
     }
 
-    public boolean isBorderBox () {
-        return (row==0 || row==7 || col==0 || col==7) ? true : false;
-    }
 
     @Override
     public String toString() {
         return "Box (" + row  + ","  +col +")"  +
                 "\n currentPiece: " + currentPiece +
-                //print possible moves , it needs a board.
-                //"\n pressListener: " + pressListener +
                 "\nfirstPressed=" + firstPressed +
                 "\nsecondPressed=" + secondPressed +
                 "\nisBlack=" + isBlack ;
