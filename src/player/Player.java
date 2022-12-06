@@ -7,6 +7,8 @@ import java.util.function.Supplier;
 @Data
 public abstract class Player {
 
+    private TypePlayer type;
+
     private boolean human;
 
     private Color color;
@@ -18,7 +20,7 @@ public abstract class Player {
         this.color = color;
     }
 
-    public Supplier<Boolean> makeMove;
+    public abstract boolean makeMove();
 
 
 

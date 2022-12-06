@@ -4,21 +4,23 @@ import board.ChessBoard;
 import board.PlayerPieces;
 import board.boxes.FakeBox;;
 import board.boxes.RealBox;
+import lombok.Data;
 import moves.FakeMove;
 import moves.Move;
 import moves.RealMove;
 import pieces.Piece;
 import javax.swing.*;
 import java.awt.Color;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+@Data
 public class AiPlayer extends Player {
+
+    private final TypePlayer type = TypePlayer.AI;
 
     private Runnable makeMoveRunnable;
 
@@ -39,6 +41,10 @@ public class AiPlayer extends Player {
         return ()->makeMoveWithDepth(board,maxDepth);
     }
 
+    public boolean makeMove () {
+        return makeMoveWithDepth(board,standardDepth);
+    }
+
     public boolean makeMove (RealBox[][] board) {
         return makeMoveWithDepth(board,standardDepth);
     }
@@ -53,7 +59,7 @@ public class AiPlayer extends Player {
         FakeMove bestMove = null;
         for(FakeMove move : possibleMoves){
             move.makeMove();
-            int tempValue = alphaBeta(fakeBoard,maxDepth,true,Integer.MIN_VALUE,Integer.MAX_VALUE);
+            int tempValue = alphaBeta(fakeBoard,maxDepth,true,Integer.MIN_VALUE,Integer.MAX_VALUE,false,false);
             move.undo();
             if(tempValue>bestValue) {
                 bestValue = tempValue;
@@ -67,9 +73,9 @@ public class AiPlayer extends Player {
 
 
 
-    private int alphaBeta ( FakeBox[][] board, int depth, boolean maximizingPlayer, int a , int b) {
+    private int alphaBeta ( FakeBox[][] board, int depth, boolean maximizingPlayer, int a , int b, boolean winning, boolean losing) {
         System.out.println("-----------------AlphaBeta at depth" + depth + "----------------");
-        if (depth == 0) {
+        if (depth == 0 || winning || losing) {
             int valutation = evaluateBoard(board); //aggiungere vittoria
             /*for(int i=0; i<2; i++){
                 for(int j=0;j<2;j++){
@@ -82,8 +88,8 @@ public class AiPlayer extends Player {
         if (maximizingPlayer) {
             int value = Integer.MIN_VALUE;
             for (FakeMove move : getPossibleMoves(board)) {
-                move.makeMove();
-                value = Math.max(value, alphaBeta(board, depth - 1, false, a, b));
+                winning = move.makeMove();
+                value = Math.max(value, alphaBeta(board, depth - 1, false, a, b, winning, losing));
                 move.undo();
                 a = Math.max(a, value);
                 if (b <= a) break; // β cutoff
@@ -92,8 +98,8 @@ public class AiPlayer extends Player {
         } else {
             int value = Integer.MAX_VALUE;
             for (FakeMove move : getPossibleMoves(board)) {
-                move.makeMove();
-                value = Math.min(value, alphaBeta(board, depth - 1, true, a, b));
+                losing = move.makeMove();
+                value = Math.min(value, alphaBeta(board, depth - 1, true, a, b,winning,losing));
                 move.undo();
                 b = Math.min(b, value);
                 if (b <= a) break; // α cutoff
@@ -189,11 +195,11 @@ public class AiPlayer extends Player {
 
     public static void main(String[] args) throws Exception {
 
-        System.setOut(new PrintStream(new OutputStream() {
+        /* System.setOut(new PrintStream(new OutputStream() {
             public void write(int b) {
                 //DO NOTHING
             }
-        }));
+        }));*/
 
         JFrame f = new JFrame("ChessChamp");
         ChessBoard cb = new ChessBoard(f);
@@ -234,7 +240,7 @@ public class AiPlayer extends Player {
 
         AtomicBoolean endTurn = new AtomicBoolean(false);
 
-
+        CompletableFuture turn = new CompletableFuture();
 
 
         while(true) {
@@ -242,6 +248,11 @@ public class AiPlayer extends Player {
 
             endTurn.set(false);
 
+            turn.thenRun(p1.getWaitFillTheMove())
+                    .thenRun(p1.getMakeRealMove())
+                    .thenRun(cb::clearPressedDatas)
+                    .thenRun(p2.makeMoveRunnable);
+            /*
             CompletableFuture
                     .runAsync(p1.getWaitFillTheMove())
                     .thenRun(p1.getMakeRealMove())
@@ -251,11 +262,11 @@ public class AiPlayer extends Player {
                /* .thenRun(p1.getWaitFillTheMove())
                 .thenRun(p1.getMakeRealMove())
                 .thenRun(p2.makeMoveRunnable);*/
-
+            /*
             while(!endTurn.get()){
                 //System.out.println(".....wait end turn.....");
                 Thread.sleep(1000);
-            }
+            }*/
 
             System.out.println("-------------END TURN---------------");
         }

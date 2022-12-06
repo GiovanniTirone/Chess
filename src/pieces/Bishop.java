@@ -3,7 +3,6 @@ import board.boxes.IBox;
 import board.ChessBoard;
 import board.PlayerPieces;
 import moves.BoxMoves;
-
 import javax.swing.*;
 import java.awt.*;
 

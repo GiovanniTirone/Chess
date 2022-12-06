@@ -4,6 +4,7 @@ import board.PlayerPieces;
 import board.boxes.IBox;
 import lombok.Data;
 import pieces.Piece;
+import pieces.PieceName;
 import player.HumanPlayer;
 
 import javax.swing.*;
@@ -33,7 +34,7 @@ public abstract class Move<SomeBox extends IBox>{
         Piece endPiece = end.getCurrentPiece();
         if(endPiece != null){  //se voglio spostare la logica delle possible moves dai pieces alle moves devo metterla qui
             if(endPiece.getColor() != startPiece.getColor()){
-               // if(endPiece.getPieceName() == PieceName.KING) return true;
+                if(endPiece.getPieceName() == PieceName.KING) return true;
                 //endPiece.setLive(false);
                 eatenPiece = endPiece;
                 removePieceFromEnd();

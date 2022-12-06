@@ -14,6 +14,7 @@ import java.util.concurrent.CompletableFuture;
 @Data
 public class HumanPlayer extends Player {
 
+    private final TypePlayer type = TypePlayer.HUMAN;
     private RealBox[][] board;
 
     private RealMove nextMove;
@@ -53,12 +54,29 @@ public class HumanPlayer extends Player {
 
     }
 
+    public boolean makeMove () {
+        if(nextMove.makeMove()) return true;
+        nextMove.setStart(null);
+        nextMove.setEnd(null);
+        fillTheMove = false;
+        return false;
+    }
 
     public BoxMoves getPossibleMoves (RealBox starterRealBox, RealBox[][] board) throws Exception {
         if(starterRealBox.getCurrentPiece()==null) throw new Exception("The starter box must contain a piece!!");
         return starterRealBox.getCurrentPiece().getPossibleMoves(starterRealBox,board);
     }
 
+    public void waitFillTheMove () {
+        while(!fillTheMove) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("..........wait fill the move...........");
+        }
+    }
 
 
 
