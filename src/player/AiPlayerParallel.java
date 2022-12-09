@@ -9,8 +9,6 @@ import pieces.Piece;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.*;
 import java.util.stream.Collectors;
@@ -26,7 +24,7 @@ public class AiPlayerParallel extends Player {
 
     private int standardDepth;
 
-
+        //fvf
 
     public AiPlayerParallel(Color color, RealBox [][] board) {
         super(false, color);
@@ -54,25 +52,14 @@ public class AiPlayerParallel extends Player {
 
     public boolean makeMoveWithDepth (RealBox[][] board,int maxDepth) throws InterruptedException, ExecutionException {  //Inserire alphaBeta anche qui???
         System.out.println("-------------------Make AI move-----------------------");
+
         FakeBox[][] fakeBoard = createFakeBoardFromBoard(board);
-        //System.err.println("fakeboard" + fakeBoard);
+
         List<FakeMove> possibleMoves = getPossibleMoves(fakeBoard);
         List<Callable<Value_Move>> tasks = possibleMoves.stream().map(move -> createTask(fakeBoard,move,maxDepth)).collect(Collectors.toList());
-       // System.err.println(possibleMoves);
-        tasks.forEach(task -> System.out.println("task" + task));
+
         ExecutorService executor = Executors.newFixedThreadPool(8);
         List<Future<Value_Move>> computed_values = executor.invokeAll(tasks);
-
-        /*
-        executor.shutdown();
-
-        while(!executor.isTerminated()){
-            System.out.println("not terminated");
-            Thread.sleep(100);
-        }
-        */
-
-
 
         int bestValue = Integer.MIN_VALUE;
         FakeMove bestMove = null;
@@ -99,13 +86,11 @@ public class AiPlayerParallel extends Player {
                         fakeBoard[i][j].getCurrentPiece() == null ? null : fakeBoard[i][j].getCurrentPiece().clone());
             }
         }
-       // Arrays.stream(copy).forEach(row -> Arrays.stream(row).forEach(box -> System.out.println(box)));
         return copy;
     }
 
     private Callable<Value_Move> createTask (FakeBox [][] fakeBoard, FakeMove move,int maxDepth) {
         return () -> {
-          //  System.out.println("Running move: " + move);
             FakeBox[][] copyBoard = copyFakeBoard(fakeBoard);
             FakeMove copyMove = translateMove(move,copyBoard);
             copyMove.makeMove();
@@ -144,7 +129,6 @@ public class AiPlayerParallel extends Player {
                 a = Math.max(a, value);
                 if (b <= a) break; // β cutoff
             }
-          //  System.out.println("VALUE MAX " + value);
             return value;
         } else {
             int value = Integer.MAX_VALUE;
@@ -155,7 +139,6 @@ public class AiPlayerParallel extends Player {
                 b = Math.min(b, value);
                 if (b <= a) break; // α cutoff
             }
-         //   System.out.println("VALUE MIN " + value);
             return value;
         }
     }
