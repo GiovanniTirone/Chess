@@ -25,16 +25,17 @@ public abstract class Move<SomeBox extends IBox>{
     public  boolean makeMove (){
         Piece startPiece = start.getCurrentPiece();
         Piece endPiece = end.getCurrentPiece();
+        boolean winning = false;
         if(endPiece != null){
             if(endPiece.getColor() != startPiece.getColor()){
-                if(endPiece.getPieceName() == PieceName.KING) return true;
+                if(endPiece.getPieceName() == PieceName.KING) winning = true;
                 eatenPiece = endPiece;
                 removePieceFromEnd();
             }
         }
         removePieceFromStart();
         addPieceToEnd(startPiece);
-        return false;
+        return winning ? true : false;
     };
 
     protected void removePieceFromStart () {
@@ -56,6 +57,7 @@ public abstract class Move<SomeBox extends IBox>{
         addPieceToStart(end.getCurrentPiece());
         removePieceFromEnd();
         addPieceToEnd(eatenPiece);
+        eatenPiece = null; // serve ????
     }
 
 

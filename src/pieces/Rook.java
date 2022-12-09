@@ -32,5 +32,12 @@ public class Rook extends Piece{
         return boxMoves;
     }
 
+    @Override
+    public Rook clone() {
+        Rook rook = new Rook(this.getColor());
+        rook.setStrength(this.getStrength()>0);
+        return rook;
+    }
+
 
 }

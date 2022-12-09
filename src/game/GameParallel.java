@@ -1,18 +1,22 @@
 package game;
+
 import board.ChessBoard;
 import board.PlayerPieces;
 import player.AiPlayer;
+import player.AiPlayerParallel;
 import player.HumanPlayer;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
 
 
-public class Game {
+public class GameParallel {
 
     private HumanPlayer p1;
 
-    private AiPlayer p2;
+    private AiPlayerParallel p2;
 
     private ChessBoard cb;
 
@@ -22,11 +26,11 @@ public class Game {
 
     private Winner winner;
 
-    public Game() {
+    public GameParallel() {
         this.frame = new JFrame();
         this.cb = new ChessBoard(frame);
         this.p1 = new HumanPlayer(Color.WHITE, cb.getBoard());
-        this.p2 = new AiPlayer(Color.BLACK, cb.getBoard());
+        this.p2 = new AiPlayerParallel(Color.BLACK, cb.getBoard());
         this.winner = Winner.NONE;
         this.turn = () -> {
             while (true) {
@@ -37,9 +41,13 @@ public class Game {
                     break;
                 }
                 cb.clearPressedDatas();
-                if (p2.makeMove()) {
-                    winner = Winner.P2;
-                    break;
+                try {
+                    if (p2.makeMove()) {
+                        winner = Winner.P2;
+                        break;
+                    }
+                } catch (ExecutionException | InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
                 ;
 
@@ -90,7 +98,7 @@ public class Game {
 
 
     public static void main(String[] args) throws Exception {
-        Game game = new Game();
+        GameParallel game = new GameParallel();
         game.initChessBoard();
         game.initPieces();
         game.startGame();

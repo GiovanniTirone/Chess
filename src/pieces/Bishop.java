@@ -32,5 +32,12 @@ public class Bishop extends Piece{
     }
 
 
+    @Override
+    public Bishop clone () {
+        Bishop bishop = new Bishop(this.getColor());
+        bishop.setStrength(this.getStrength() > 0);
+        return bishop;
+    }
+
 
 }

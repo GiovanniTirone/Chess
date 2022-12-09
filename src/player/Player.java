@@ -2,6 +2,7 @@ package player;
 
 import lombok.Data;
 import java.awt.*;
+import java.util.concurrent.ExecutionException;
 
 
 @Data
@@ -20,7 +21,7 @@ public abstract class Player {
         this.color = color;
     }
 
-    public abstract boolean makeMove();
+    public abstract boolean makeMove() throws ExecutionException, InterruptedException;
 
 
 

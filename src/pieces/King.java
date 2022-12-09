@@ -27,5 +27,12 @@ public class King extends Piece{
     }
 
 
+    @Override
+    public King clone() {
+        King king = new King(this.getColor());
+        king.setStrength(this.getStrength()>0);
+        return king;
+    }
+
 
 }

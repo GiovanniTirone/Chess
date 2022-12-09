@@ -6,7 +6,7 @@ public enum PieceName {
     BISHOP("\u2657",30 ),
     KNIGHT("\u2658",30),
     ROOK("\u2656",50),
-    QUEEN("\u2655",90),
+    QUEEN("\u2655",200),
     KING("\u2654",900);
 
 

@@ -25,6 +25,8 @@ public class Knight extends  Piece{
         return boxMoves;
     }
 
+
+
     private void addKnightMove (int i, int j, int n, int k, BoxMoves boxMoves, IBox[][]board) {
         if (numberIsInBoardKnight(i + k) && numberIsInBoardKnight(j + n))
             boxMoves.addMove(i + k, j + n, board);
@@ -33,6 +35,13 @@ public class Knight extends  Piece{
 
     private boolean numberIsInBoardKnight (int number) {
         return !numberIsInBoard(number) || number==-2 || number==9 ? false : true;
+    }
+
+    @Override
+    public Knight clone() {
+        Knight knight = new Knight(this.getColor());
+        knight.setStrength(this.getStrength()>0);
+        return knight;
     }
 
 

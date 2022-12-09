@@ -5,6 +5,8 @@ import board.boxes.IBox;
 
 public class FakeMove extends Move<IBox> {
 
+    public FakeMove () {};
+
     public FakeMove (IBox startingBox, IBox endingBox) {
         super(startingBox,endingBox);
     }

@@ -44,5 +44,12 @@ public class Queen extends Piece {
         return boxMoves;
     }
 
+    @Override
+    public Queen clone() {
+        Queen queen = new Queen(this.getColor());
+        queen.setStrength(this.getStrength()>0);
+        return queen;
+    }
+
 
 }

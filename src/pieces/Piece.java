@@ -14,12 +14,10 @@ public abstract class Piece {
 
     private int strength;
     private JLabel jLabel;
-    private boolean live;
 
     public Piece (Color color,PieceName pieceName) {
         this.color = color;
         this.pieceName = pieceName;
-        this.live = true;
     }
 
     public String getUnicodeChar () {
@@ -56,6 +54,11 @@ public abstract class Piece {
         System.out.println("PieceName: "+pieceName);
         System.out.println("Color: " + color);
         System.out.println("JLabel: " + jLabel);
-        System.out.println("Live: " + live);
     }
+
+
+    public abstract Piece clone () ;
+
+
+
 }

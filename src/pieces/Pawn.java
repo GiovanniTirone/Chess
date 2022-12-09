@@ -23,6 +23,8 @@ public class Pawn extends Piece{
         return boxMoves;
     }
 
+
+
     public void addKillingMoves (IBox currentBox, IBox[][] board, BoxMoves boxMoves) {
         int k = this.getColor() == Color.BLACK ? 1 : -1 ;
         int i = currentBox.getRow();
@@ -41,5 +43,12 @@ public class Pawn extends Piece{
         }
     }
 
+
+    @Override
+    public Pawn clone() {
+        Pawn pawn = new Pawn(this.getColor());
+        pawn.setStrength(this.getStrength()>0);
+        return pawn;
+    }
 
 }
