@@ -24,8 +24,6 @@ public class AiPlayerParallel extends Player {
 
     private int standardDepth;
 
-        //fvf
-
     public AiPlayerParallel(Color color, RealBox [][] board) {
         super(false, color);
         this.board = board;
